@@ -65,4 +65,4 @@ addons:
     notification_email: pmatos@linki.tools
     build_command_prepend: "cd racket/src && ./configure"
     build_command: "make -j 2"
-    branch_pattern: coverity_scan
+    branch_pattern: coverity-scan
