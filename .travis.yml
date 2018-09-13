@@ -33,6 +33,7 @@ before_script:
 - git config --global user.name "Travis Tester"
 
 script:
+- test $TRAVIS_BRANCH != coverity_scan || exit 0
 - make CPUS="2" PKGS="racket-test db-test unstable-flonum-lib net-test" CONFIGURE_ARGS_qq="$RACKET_CONFIGURE_ARGS"
 
 notifications:
@@ -42,7 +43,24 @@ notifications:
     on_success: change
     
 before_install:
+- test $TRAVIS_BRANCH != coverity_scan -o ${TRAVIS_JOB_NUMBER##*.} = 1 || exit 0
 - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+- raco test -l tests/racket/test
+- racket -l tests/racket/contract/all
+- raco test -l tests/json/json
+- raco test -l tests/file/main
+- raco test -l tests/net/head
+- raco test -l tests/net/uri-codec
+- raco test -l tests/net/url
+- raco test -l tests/net/url-port
+- raco test -l tests/net/encoders
+- raco test -l tests/openssl/basic
+- raco test -l tests/openssl/https
+- raco test -l tests/match/main
+- raco test -l tests/zo-path
+- raco test -l tests/xml/test
+- raco test -l tests/db/all-tests
+- raco test -c tests/stxparse
 
 addons:
   coverity_scan:
@@ -52,4 +70,4 @@ addons:
     notification_email: pmatos@linki.tools
     build_command_prepend: cd racket/src && ./configure
     build_command: make -j 2
-    branch_pattern: coverity-scan
+    branch_pattern: coverity_scan
