@@ -3,21 +3,22 @@ language: c
 os: linux
 dist: trusty
 sudo: true
+
 compiler:
-  - gcc
-  - clang
+- gcc
+- clang
 
 env:
-  global:
-    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-    #   via the "travis encrypt" command using the project repo's public key
-    - secure: "URpeZ2uNkpoMe3ZjXrXgBGrTLOBysVtZY7PifyV5GYV10umZLmAk6ZLSo4pSiskpWHS0DFtEQSbh3IgjPtJbrclGTE75uMvnHsX20gsvZmEt2fH+XiUQq0MuIKFJl9V+X6OOnu4IKTaUCL7sQAopl7yM4ZKUqzf0nkraAazi3eKAIn/AhCLIXQzlY/Mz7uWJ0NR8Gj3QHVXKM71Q9EQ3Mil8HnoTb6F6wy9GXfJI/8yIpqE/fHJxiF3Ss0hsRo85cnMImzsXn2RsDeaLnepvOXOSZPaTRYvR3HDyIhRfQy3gyYscqmZ6Q60Fq0g2+kViwzKfFbB4iPkLM+cftn6cBR1bvzXqeHZa+jbJiH6VL/srdtPcOr7aRsBwOtzaPsOTrtyoz4flO5ifn0xSubXhmT0SdwFXfrW2yudZc/UqERu9JR79ui/bn2qh2KVtoPxQ//jWr+y2pAzK5zKNJXXo4E/DqOXy9jFGggN5eq4bTo2O3yRkIL2HdMZscw4BJN4nd769Mac0Wa19xnB0TdQS0bu7MGbuUKtZSkinNviizwH3brNf2WtqtoAay1ws7CxxedGrW02QxWkv22xiMTKh4voQ0fl9eqiy4WjfwiGUV8XPa8wsVp60QjU4FLQBpJ2jqoKQSGx1M0g6l60QsIRRLO95ejuQDBknifEJ1Dzk51s="
   matrix:
-    - PATH=./racket/bin:$PATH
-    - PATH=./racket/bin:$PATH RACKET_CONFIGURE_ARGS="--disable-places --disable-futures --disable-extflonum"
-    - PATH=./racket/bin:$PATH RACKET_CONFIGURE_ARGS="--disable-jit"
-    - PATH=./racket/bin:$PATH RACKET_CONFIGURE_ARGS="--disable-jit --disable-places --disable-futures --disable-extflonum"
-  
+  - PATH=./racket/bin:$PATH
+  - PATH=./racket/bin:$PATH RACKET_CONFIGURE_ARGS="--disable-places --disable-futures
+    --disable-extflonum"
+  - PATH=./racket/bin:$PATH RACKET_CONFIGURE_ARGS="--disable-jit"
+  - PATH=./racket/bin:$PATH RACKET_CONFIGURE_ARGS="--disable-jit --disable-places
+    --disable-futures --disable-extflonum"
+  global:
+    secure: WzYOJ7FWVcV3pSUDzm0FL5WAN5ljoI5Epmo1Cv1JhXdQWCohxfmqkHV+CnbFVlNMWWJe5/FanG+Iv5jmUMHVkA26f0h2YGC0PdzZZHlBVJGsrvkD8D+8AcVP0F68LGbwag6DqwWiB/pYtG5F1/Hw+4Wvzv/lW0YQ1y6JmYmftOZstHhj+/nZ+uAUx6IzAfOOZtiOWEV1wM4Ud+Ir2BHvF+JrrxNMd1mB2nnAM8Z5Rux6jXO28pn3Ir7rrowgyxMYXArY7i5U7BOlC7Vi90mvQYc4k9h+0jnuOy3axPd/Pkultg1/LiLC4WWivzA6TsgNLYFyUJzlxkEdnGPP4te/FirVnfuw0D7+jHvFaWvezkReIivvHb2UcRVldy85974UaFf9ID+AU1mVQkvFWL5YBt3fEDw/GFKKyhzOTksElQsU+QqFSUSgvZCOjaLcf+aQtmvz7WTZQl/BcvOL5nD4Kcto7jBNFmPw/wSWuegbjBvZcoFdZ6TlPOV2cneq9UzGftwbLyWl2JCpUrNyqj3SloLvSfINJp9Hkqkov03/tYuu/Da1TZJvra1qX+XIQVricpUJ1hFMHlpIpgSUuUNBhD/gv4exrIn6aVeJSg836I6+Q+glfHN5jf1KK+dtABV5rx3R2w4T9z21jOHt41Ko5TNsIz8QZS+yqth88vaDbUQ=
+    
 matrix:
   include:
   - os: osx
@@ -26,44 +27,29 @@ matrix:
   - os: osx
     compiler: clang
     env: PATH=./racket/bin:$PATH
-
+    
 before_script:
-  - git config --global user.email "travis-test@racket-lang.org"
-  - git config --global user.name "Travis Tester"
+- git config --global user.email "travis-test@racket-lang.org"
+- git config --global user.name "Travis Tester"
+
 script:
-  - make CPUS="2" PKGS="racket-test db-test unstable-flonum-lib net-test" CONFIGURE_ARGS_qq="$RACKET_CONFIGURE_ARGS"
-#  - raco test -l tests/racket/test
-#  - racket -l tests/racket/contract/all
-#  - raco test -l tests/json/json
-#  - raco test -l tests/file/main
-#  - raco test -l tests/net/head
-#  - raco test -l tests/net/uri-codec
-#  - raco test -l tests/net/url
-#  - raco test -l tests/net/url-port
-#  - raco test -l tests/net/encoders
-#  - raco test -l tests/openssl/basic
-#  - raco test -l tests/openssl/https
-#  - raco test -l tests/match/main
-#  - raco test -l tests/zo-path
-#  - raco test -l tests/xml/test
-#  - raco test -l tests/db/all-tests
-#  - raco test -c tests/stxparse
-  
+- make CPUS="2" PKGS="racket-test db-test unstable-flonum-lib net-test" CONFIGURE_ARGS_qq="$RACKET_CONFIGURE_ARGS"
+
 notifications:
   email:
     recipients:
-      - pmatos@linki.tools
+    - pmatos@linki.tools
     on_success: change
-
+    
 before_install:
-  - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+- echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 
 addons:
   coverity_scan:
     project:
-      name: "LinkiTools/racket"
-      description: "The Racket Programming Language"
+      name: LinkiTools/racket
+      description: The Racket Programming Language
     notification_email: pmatos@linki.tools
-    build_command_prepend: "cd racket/src && ./configure"
-    build_command: "make -j 2"
+    build_command_prepend: cd racket/src && ./configure
+    build_command: make -j 2
     branch_pattern: coverity-scan
