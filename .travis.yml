@@ -11,7 +11,7 @@ env:
   global:
     # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
     #   via the "travis encrypt" command using the project repo's public key
-    - secure: "c7B5kjcxBsL8zjMRVfEUpCAEEdIbaVC7BtcfBy52j9kmBtlK3nPUMR83tcZKBlSJIB6rVBgkaJlFx9mv0NJJlD13aqZ58dF5Ik5GzkencP3pF3vYR6zZkxG1cXamqfQLB0e9rpfHX5oFB7hy/1swGMi7rP/jmaiFq5z9vVlSIhqrNU7sJULqw/e+L+nFGs8v6jSk4Q9R0rh/FImjd9aDl4yv0sVTx9VXujQLF9Qr1lzGLfxgnNhe/u/n9VOqhQTIbT/ImmMQhvUbFI2zyEPkMhn96INR5kkdyuWm1CbfTVcxuCJ89Ff4p7Fhao24zrrrM2HOo6OP5DrKEquf10IC95d4+s91fmyiRXnehg2rO4vRx+ibTXNQibbcQCGFG/z+f/ASM9VkGCD9PVqXvnWduxR6PtQ7+78QxyoGIfKSKyO7ksbPsHtrm1kg+9C/akCEI9ssTsgSwR9jurruPAU40aluXj8Y6/h9N9b0G8/R8w+BzkVpCiuyHBPQHuHhnviUJ1EK0Z+GU7Yh0kkSAhO0KuX9W/dr00CA6iaW/8fe09W5HBz2UfmQ5Rta/Xp731ylKOxjfPp3H0z35bwtd8G05mAYXvBINBnScMyAI66I0C/sJLJ1gDIhI7SsuEqwDTNA30+D5BxF15Ybp1axFiEm60SktwaKpcW1jVFIMQTo0+U="
+    - secure: "URpeZ2uNkpoMe3ZjXrXgBGrTLOBysVtZY7PifyV5GYV10umZLmAk6ZLSo4pSiskpWHS0DFtEQSbh3IgjPtJbrclGTE75uMvnHsX20gsvZmEt2fH+XiUQq0MuIKFJl9V+X6OOnu4IKTaUCL7sQAopl7yM4ZKUqzf0nkraAazi3eKAIn/AhCLIXQzlY/Mz7uWJ0NR8Gj3QHVXKM71Q9EQ3Mil8HnoTb6F6wy9GXfJI/8yIpqE/fHJxiF3Ss0hsRo85cnMImzsXn2RsDeaLnepvOXOSZPaTRYvR3HDyIhRfQy3gyYscqmZ6Q60Fq0g2+kViwzKfFbB4iPkLM+cftn6cBR1bvzXqeHZa+jbJiH6VL/srdtPcOr7aRsBwOtzaPsOTrtyoz4flO5ifn0xSubXhmT0SdwFXfrW2yudZc/UqERu9JR79ui/bn2qh2KVtoPxQ//jWr+y2pAzK5zKNJXXo4E/DqOXy9jFGggN5eq4bTo2O3yRkIL2HdMZscw4BJN4nd769Mac0Wa19xnB0TdQS0bu7MGbuUKtZSkinNviizwH3brNf2WtqtoAay1ws7CxxedGrW02QxWkv22xiMTKh4voQ0fl9eqiy4WjfwiGUV8XPa8wsVp60QjU4FLQBpJ2jqoKQSGx1M0g6l60QsIRRLO95ejuQDBknifEJ1Dzk51s="
   matrix:
     - PATH=./racket/bin:$PATH
     - PATH=./racket/bin:$PATH RACKET_CONFIGURE_ARGS="--disable-places --disable-futures --disable-extflonum"
