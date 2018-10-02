@@ -3,9 +3,11 @@ language: c
 matrix:
   include:
   - os: osx
+    osx_image: xcode9.4
     compiler: gcc
     env: PATH=./racket/bin:$PATH
   - os: osx
+    osx_image: xcode9.4
     compiler: clang
     env: PATH=./racket/bin:$PATH
   - os: linux
@@ -32,6 +34,7 @@ before_script:
 - git config --global user.email "travis-test@racket-lang.org"
 - git config --global user.name "Travis Tester"
 script:
+- if [ "$TRAVIS_OS_NAME" = "osx" ] && [ "$CC" = "gcc" ]; then export CC=gcc-4.8; fi
 - make CPUS="2" PKGS="racket-test db-test unstable-flonum-lib net-test" CONFIGURE_ARGS_qq="$RACKET_CONFIGURE_ARGS"
 - raco test -l tests/racket/test
 - racket -l tests/racket/contract/all
