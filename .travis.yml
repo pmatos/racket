@@ -76,6 +76,6 @@ cache:
       
 addons:
   sonarcloud:
-    organization: "LinkiTools_racket"
+    organization: "linkitools"
     token:
       secure: "G+Ok9dLIuq0+gQcEzl1GsDcgXjNEy5VVHLFrRUxZaJshOejDygvmIk8tyxwtY6yJBFZNt5lHhHp8GnnDExNy9+FCmunt+8WhhmzY1/3szIIX9jnMurIoC/i0OpaLnEqUJYDwEaJLvkWvTxfhHxxPjDzyvYeNLIVoXRQ7HcP+7l/u/Zww0CSR43Ws7zoQqWOa+lQJ6li05kXu0TuMByQgvt1sPkZ9ke/PS1Bn1w8cKKKIComGI9ivvwEjQYTLeq5shSaMRP0B1k7cUkN5PmVacgtRul/xORr47hL4joBx2R6EIbU+USQ8+MxgSomi15Ys5185GPLA8JinOMXCZzJQt3vKn5dslrP80G4yi0wMYhBIxPWWJpX0Gs/xco/Sn1D3+yRiaJiVquH/4wIFwgX7GKx/sbam0aeNLRmp6WGTc0imb1vd5G3iNvT0kXgxhLbBdy2xmUsQ3s+zbZn3R/NoPB4+NQ2tDS/C8b+sQ/NM1HmuJP91iZ5Q4w74BFzTyIBnA/0Ae6ZueUYuOlVAJxP2x7izJxOkFoiIUTEzCZ1zS1rdYiE+XxXulaZXUquECWe5HCpHkbu8yt7FJrhVzZh+12QHdNoL1PjTvcgC/HsD6cZuk4Ru38HDqCHVkvtcWmfjaA3AnNHcahK6FIvEx7WtWLImU89rP1xPxT63Y2R7e/c="
