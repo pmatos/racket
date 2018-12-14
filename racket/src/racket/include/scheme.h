@@ -406,14 +406,14 @@ typedef struct Scheme_Vector {
 
 typedef struct Scheme_Double_Vector {
   Scheme_Inclhash_Object iso; /* & 0x2 indicates allocated in the MASTERGC */
-  intptr_t size;
+  size_t size;
   double els[mzFLEX_ARRAY_DECL];
 } Scheme_Double_Vector;
 
 #ifdef MZ_LONG_DOUBLE
 typedef struct Scheme_Long_Double_Vector {
   Scheme_Inclhash_Object iso; /* & 0x2 indicates allocated in the MASTERGC */
-  intptr_t size;
+  size_t size;
   mz_long_double els[mzFLEX_ARRAY_DECL];
 } Scheme_Long_Double_Vector;
 #endif
