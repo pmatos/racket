@@ -4134,31 +4134,30 @@ static MZ_INLINE Scheme_Object *values_slow(int argc, Scheme_Object *argv[])
   p->values_buffer = a;
   p->values_buffer_size = argc;
 
+  p->ku.multiple.count = argc;
   p->ku.multiple.array = a;
 
-  for (i = 0; i < argc; i++) {
+  for (i = 0; i < argc; i++)
     a[i] = argv[i];
-  }
 
   return SCHEME_MULTIPLE_VALUES;
 }
 
 Scheme_Object *scheme_values(int argc, Scheme_Object *argv[])
 {
-  Scheme_Thread *p;
-  int i;
+  Scheme_Thread *p = scheme_current_thread;
   Scheme_Object **a;
+  int i;
 
   if (argc == 1)
     return argv[0];
 
-  p = scheme_current_thread;
   if (!p->values_buffer || p->values_buffer_size < argc)
     return values_slow(argc, argv);
 
   for (a = p->values_buffer, i = 0; i < argc; i++)
     a[i] = argv[i];
-  
+
   p->ku.multiple.count = argc;
   p->ku.multiple.array = a;
 
