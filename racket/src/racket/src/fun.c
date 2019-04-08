@@ -4153,18 +4153,14 @@ Scheme_Object *scheme_values(int argc, Scheme_Object *argv[])
     return argv[0];
 
   p = scheme_current_thread;
-  p->ku.multiple.count = argc;
-  if (p->values_buffer && (p->values_buffer_size >= argc)) {
-    a = p->values_buffer;
-  } else {
+  if (!p->values_buffer || p->values_buffer_size < argc)
     return values_slow(argc, argv);
-  }
 
-  p->ku.multiple.array = a;
-
-  for (i = 0; i < argc; i++) {
+  for (a = p->values_buffer, i = 0; i < argc; i++)
     a[i] = argv[i];
-  }
+  
+  p->ku.multiple.count = argc;
+  p->ku.multiple.array = a;
 
   return SCHEME_MULTIPLE_VALUES;
 }
