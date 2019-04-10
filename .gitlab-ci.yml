@@ -88,6 +88,49 @@ scan-build:racketcs:
     paths:
       - scan-report-cs_cc/
 
+      
+# ---------------------------------------------------------------------------------------------------
+##
+## The following jobs determine if files which should have been regenerated and
+## committed were forgotten.
+##
+## We do this for:
+## - Configure files
+## - export files
+## 
+fileregen:exports:
+  stage: test
+  image: debian:stable-slim
+  variables:
+    RACKET_VERSION: "release"
+    RACKET_DIR: "/racket"
+  before_script:
+    - git clone https://github.com/greghendershott/travis-racket.git
+    - cat travis-racket/install-racket.sh | bash # pipe to bash not sh!
+    - export PATH="${RACKET_DIR}/bin:${PATH}" #install-racket.sh can't set for us
+  script:
+    - cd racket/src
+    - ./configure
+    - cd src
+    - make exports
+    - git diff-index --quiet HEAD --;
+
+fileregen:configure:
+  stage: test
+  image: debian:stable-slim
+  variables:
+    RACKET_VERSION: "release"
+    RACKET_DIR: "/racket"
+  before_script:
+    - git clone https://github.com/greghendershott/travis-racket.git
+    - cat travis-racket/install-racket.sh | bash # pipe to bash not sh!
+    - export PATH="${RACKET_DIR}/bin:${PATH}" #install-racket.sh can't set for us
+  script:
+    - cd racket/src/ac
+    - echo | ./make-configure
+    - cd ../../../
+    - git diff-index --quiet HEAD --;
+    
 # ---------------------------------------------------------------------------------------------------
 ##
 ## The following jobs build/test racket and racketcs with ubsan enabled
