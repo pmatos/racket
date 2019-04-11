@@ -105,7 +105,7 @@ fileregen:exports:
     RACKET_VERSION: "RELEASE"
     RACKET_DIR: "/racket"
   before_script:
-    - apt-get update && apt-get install -y git
+    - apt-get update && apt-get install -y git curl
     - git clone https://github.com/greghendershott/travis-racket.git
     - cat travis-racket/install-racket.sh | bash # pipe to bash not sh!
     - export PATH="${RACKET_DIR}/bin:${PATH}" #install-racket.sh can't set for us
@@ -123,7 +123,7 @@ fileregen:configure:
     RACKET_VERSION: "RELEASE"
     RACKET_DIR: "/racket"
   before_script:
-    - apt-get update && apt-get install -y git
+    - apt-get update && apt-get install -y git curl
     - git clone https://github.com/greghendershott/travis-racket.git
     - cat travis-racket/install-racket.sh | bash # pipe to bash not sh!
     - export PATH="${RACKET_DIR}/bin:${PATH}" #install-racket.sh can't set for us
