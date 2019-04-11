@@ -102,9 +102,10 @@ fileregen:exports:
   stage: test
   image: debian:stable-slim
   variables:
-    RACKET_VERSION: "release"
+    RACKET_VERSION: "RELEASE"
     RACKET_DIR: "/racket"
   before_script:
+    - apt-get update && apt-get install -y git
     - git clone https://github.com/greghendershott/travis-racket.git
     - cat travis-racket/install-racket.sh | bash # pipe to bash not sh!
     - export PATH="${RACKET_DIR}/bin:${PATH}" #install-racket.sh can't set for us
@@ -119,9 +120,10 @@ fileregen:configure:
   stage: test
   image: debian:stable-slim
   variables:
-    RACKET_VERSION: "release"
+    RACKET_VERSION: "RELEASE"
     RACKET_DIR: "/racket"
   before_script:
+    - apt-get update && apt-get install -y git
     - git clone https://github.com/greghendershott/travis-racket.git
     - cat travis-racket/install-racket.sh | bash # pipe to bash not sh!
     - export PATH="${RACKET_DIR}/bin:${PATH}" #install-racket.sh can't set for us
