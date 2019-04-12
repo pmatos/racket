@@ -112,6 +112,7 @@ fileregen:exports:
   script:
     - cd racket/src
     - ./configure
+    - cd racket
     - make exports
     - git diff-index --quiet HEAD --;
 
