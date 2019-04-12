@@ -102,7 +102,7 @@ fileregen:exports:
   stage: test
   image: debian:stable-slim
   variables:
-    RACKET_VERSION: "RELEASE"
+    RACKET_VERSION: "7.2"
     RACKET_DIR: "/racket"
   before_script:
     - apt-get update && apt-get install -y git curl
@@ -120,7 +120,7 @@ fileregen:configure:
   stage: test
   image: debian:stable-slim
   variables:
-    RACKET_VERSION: "RELEASE"
+    RACKET_VERSION: "7.2"
     RACKET_DIR: "/racket"
   before_script:
     - apt-get update && apt-get install -y git curl
