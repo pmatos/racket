@@ -114,6 +114,8 @@ fileregen:exports:
     - ./configure
     - cd racket
     - make exports
+    - cd ../../../
+    - git --no-pager diff
     - git diff-index --quiet HEAD --;
 
 fileregen:configure:
@@ -131,6 +133,7 @@ fileregen:configure:
     - cd racket/src/ac
     - echo | ./make-configure
     - cd ../../../
+    - git --no-pager diff
     - git diff-index --quiet HEAD --;
     
 # ---------------------------------------------------------------------------------------------------
