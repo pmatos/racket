@@ -6421,7 +6421,9 @@ static void *splice_ptr_array(void **a, int al, void **b, int bl, int i)
 {
   void **r;
   int j;
-  
+
+  assert(a || b);
+
   r = MALLOC_N(void*, al + bl - 1);
 
   if (a)
