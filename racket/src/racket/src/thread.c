@@ -15,6 +15,7 @@
 # define SCHEME_NO_GC_PROTO
 #endif
 
+#include <assert.h>
 #include "schpriv.h"
 #include "schmach.h"
 #include "schgc.h"
