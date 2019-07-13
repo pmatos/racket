@@ -50,7 +50,7 @@ if test "$ARFLAGS" = '' ; then
   ARFLAGS=rc
 fi
 
-AC_CHECK_LIB(m, fmod)
+AC_SEARCH_LIBS([fmod], [m])
 AC_CHECK_LIB(dl, dlopen)
 
 ############## platform tests ################
@@ -203,7 +203,7 @@ fi
 if test "${enable_iconv}" = "yes" ; then
   AC_MSG_CHECKING([for nl_langinfo (CODESET)])
   AC_TRY_LINK([#include <langinfo.h>],
-              [char *codeset = nl_langinfo (CODESET);],
+              [char *codeset = nl_langinfo (CODESET); (void) codeset;],
               AC_DEFINE(RKTIO_HAVE_CODESET,1,[Have nl_langinfo (CODESET)])
                have_codeset=yes,
               have_codeset=no)
@@ -238,6 +238,7 @@ if test "${try_poll_syscall}" = "yes" ; then
       pfd.fd = 0;
       pfd.events = POLLIN;
       r = poll(&pfd, 1, 0);
+      (void) r;
       return 0;
      }])], use_poll=yes, use_poll=no)
   AC_MSG_RESULT($use_poll)
@@ -277,6 +278,7 @@ if test "${try_inotify_syscall}" = "yes" ; then
       wd = inotify_add_watch(fd, "/tmp", 
                              (IN_CREATE | IN_DELETE | IN_DELETE_SELF
                               | IN_MODIFY | IN_MOVE_SELF | IN_MOVED_TO));
+      (void) wd;
       return 0;
     }])], use_inotify=yes, use_inotify=no)
   AC_MSG_RESULT($use_inotify)
