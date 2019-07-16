@@ -167,7 +167,7 @@
                        (db-pkg-info (car pkgs) details?))))
               ;; Local directory:
               (lambda (path)
-                (define pkg-path (build-path path "pkg" pkg))
+                (define pkg-path (build-path path pkg))
                 (and (file-exists? pkg-path)
                      (begin
                        (consulting-catalog "ed")
@@ -259,7 +259,7 @@
       (hash 'source (db:pkg-source pkg)
             'checksum (db:pkg-checksum pkg))))
 
-  
+
 (define (get-all-pkg-names-from-catalogs)
   (define ht
     (for*/hash ([i (in-list (pkg-catalogs))]
@@ -268,11 +268,11 @@
                   i
                   ;; Server:
                   (lambda (i)
-                    (read-from-server 
+                    (read-from-server
                      'get-all-pkg-names-from-catalogs
                      (add-version-query
                       (combine-url/relative i "pkgs"))
-                     (lambda (l) (and (list? l) 
+                     (lambda (l) (and (list? l)
                                  (andmap string? l)))))
                   ;; Local database:
                   (lambda ()
