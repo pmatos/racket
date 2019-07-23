@@ -384,7 +384,7 @@ bench:racket:startup:cgc:
   dependencies:
     - build:racket:cgc
   before_script:
-    - apt-get update
+    - apt-get update && apt-get install -y wget
     - wget https://github.com/sharkdp/hyperfine/releases/download/v1.6.0/hyperfine_1.6.0_amd64.deb
     - dpkg -i hyperfine_1.6.0_amd64.deb
   script:
@@ -399,7 +399,7 @@ bench:racket:startup:3m:
   dependencies:
     - build:racket:3m
   before_script:
-    - apt-get update
+    - apt-get update && apt-get install -y wget
     - wget https://github.com/sharkdp/hyperfine/releases/download/v1.6.0/hyperfine_1.6.0_amd64.deb
     - dpkg -i hyperfine_1.6.0_amd64.deb
   script:
@@ -414,7 +414,7 @@ bench:racket:startup:cs:
   dependencies:
     - build:racket:cs
   before_script:
-    - apt-get update
+    - apt-get update && apt-get install -y wget
     - wget https://github.com/sharkdp/hyperfine/releases/download/v1.6.0/hyperfine_1.6.0_amd64.deb
     - dpkg -i hyperfine_1.6.0_amd64.deb
   script:
