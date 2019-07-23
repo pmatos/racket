@@ -375,6 +375,54 @@ scan:racket:cs:
     paths:
       - test.log
 
+# Benchmarks
+
+# Benchmark: startup time
+bench:racket:startup:cgc:
+  image: ubuntu:18.04
+  stage: stage3
+  dependencies:
+    - build:racket:cgc
+  before_script:
+    - apt-get update
+    - wget https://github.com/sharkdp/hyperfine/releases/download/v1.6.0/hyperfine_1.6.0_amd64.deb
+    - dpkg -i hyperfine_1.6.0_amd64.deb
+  script:
+    - hyperfine --warmup 10 --export-json startup-bench.json 'racket -e "(exit)"'
+  artifacts:
+    paths:
+    - startup-bench.json
+
+bench:racket:startup:3m:
+  image: ubuntu:18.04
+  stage: stage4
+  dependencies:
+    - build:racket:3m
+  before_script:
+    - apt-get update
+    - wget https://github.com/sharkdp/hyperfine/releases/download/v1.6.0/hyperfine_1.6.0_amd64.deb
+    - dpkg -i hyperfine_1.6.0_amd64.deb
+  script:
+    - hyperfine --warmup 10 --export-json startup-bench.json 'racket -e "(exit)"'
+  artifacts:
+    paths:
+    - startup-bench.json
+
+bench:racket:startup:cs:
+  image: ubuntu:18.04
+  stage: stage5
+  dependencies:
+    - build:racket:cs
+  before_script:
+    - apt-get update
+    - wget https://github.com/sharkdp/hyperfine/releases/download/v1.6.0/hyperfine_1.6.0_amd64.deb
+    - dpkg -i hyperfine_1.6.0_amd64.deb
+  script:
+    - hyperfine --warmup 10 --export-json startup-bench.json 'racket -e "(exit)"'
+  artifacts:
+    paths:
+    - startup-bench.json
+
 # All of the above tests now need to run for cgc, 3m and cs built above
 
 # Test: test:racket:test
