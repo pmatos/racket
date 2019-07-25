@@ -196,6 +196,7 @@ scan:racket:cs:
 # Build racket with infer
 infer:racket:cgc:
   stage: stage2
+  image: ubuntu:18.04
   tags:
     - linux
     - x86_64
@@ -217,6 +218,7 @@ infer:racket:cgc:
 
 infer:racket:3m:
   stage: stage3
+  image: ubuntu:18.04
   tags:
     - linux
     - x86_64
@@ -241,6 +243,7 @@ infer:racket:3m:
 
 infer:racket:cs:
   stage: stage4
+  image: ubuntu:18.04
   tags:
     - linux
     - x86_64
