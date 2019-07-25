@@ -193,6 +193,78 @@ scan:racket:cs:
     paths:
       - $REPORT_DIR
 
+# Build racket with infer
+infer:racket:cgc:
+  stage: stage2
+  tags:
+    - linux
+    - x86_64
+  variables:
+    INFER_DIR: $CI_PROJECT_DIR/infer-linux64-v0.16.0
+    REPORT_DIR: $CI_PROJECT_DIR/racket/src/infer-out
+  before_script:
+    - apt-get update && apt-get install -y unzip python libxml2-dev libfindbin-libs-perl make gcc g++ autoconf automake cmake curl git libc6-dev libsqlite3-dev opam openjdk-8-jdk-headless pkg-config python2.7
+    - wget https://github.com/facebook/infer/releases/download/v0.16.0/infer-linux64-v0.16.0.tar.xz
+    - tar -xvJf infer-linux64-v0.16.0.tar.xz
+  script:
+    - export PATH=$INFER_DIR/bin:$PATH
+    - cd racket/src
+    - ./configure --disable-strip --enable-cgcdefault --enable-jit --enable-foreign --enable-places --enable-futures --enable-float --disable-docs --enable-cify --enable-pthread
+    - infer run -- make
+  artifacts:
+    paths:
+      - $REPORT_DIR
+
+infer:racket:3m:
+  stage: stage3
+  tags:
+    - linux
+    - x86_64
+  variables:
+    INFER_DIR: $CI_PROJECT_DIR/infer-linux64-v0.16.0
+    CGC_INSTALL_DIR: $CI_PROJECT_DIR/install/racketcgc
+    REPORT_DIR: $CI_PROJECT_DIR/racket/src/infer-out
+  before_script:
+    - apt-get update && apt-get install -y unzip python libxml2-dev libfindbin-libs-perl make gcc g++ autoconf automake cmake curl git libc6-dev libsqlite3-dev opam openjdk-8-jdk-headless pkg-config python2.7
+    - wget https://github.com/facebook/infer/releases/download/v0.16.0/infer-linux64-v0.16.0.tar.xz
+    - tar -xvJf infer-linux64-v0.16.0.tar.xz
+  script:
+    - export PATH=$INFER_DIR/bin:$PATH
+    - cd racket/src
+    - ./configure --disable-strip --enable-cgcdefault --enable-jit --enable-foreign --enable-places --enable-futures --enable-float --disable-docs --enable-cify --enable-pthread --enable-racket=$CGC_INSTALL_DIR/bin/racket
+    - infer run -- make
+  dependencies:
+    - build:racket:cgc
+  artifacts:
+    paths:
+      - $REPORT_DIR
+
+infer:racket:cs:
+  stage: stage4
+  tags:
+    - linux
+    - x86_64
+  variables:
+    INFER_DIR: $CI_PROJECT_DIR/infer-linux64-v0.16.0
+    MMM_INSTALL_DIR: $CI_PROJECT_DIR/install/racket3m
+    REPORT_DIR: $CI_PROJECT_DIR/racket/src/infer-out
+  before_script:
+    - apt-get update && apt-get install -y unzip python libxml2-dev libfindbin-libs-perl make gcc g++ uuid-dev git autoconf automake cmake curl git libc6-dev libsqlite3-dev opam openjdk-8-jdk-headless pkg-config python2.7
+    - wget https://github.com/facebook/infer/releases/download/v0.16.0/infer-linux64-v0.16.0.tar.xz
+    - tar -xvJf infer-linux64-v0.16.0.tar.xz
+  script:
+    - export PATH=$INFER_DIR/bin:$PATH
+    - cd racket/src
+    - rm -r ChezScheme || true
+    - git clone --depth=1 --recurse-submodules -j8 https://github.com/racket/ChezScheme
+    - ./configure --disable-strip  --enable-compress --disable-docs --enable-pthread --enable-racket=$MMM_INSTALL_DIR/bin/racket --enable-csdefault --enable-csonly 
+    - infer run -- make
+  dependencies:
+    - build:racket:3m
+  artifacts:
+    paths:
+      - $REPORT_DIR
+
 #
 # Split testing jobs
 # Jobs starting with . are templates to be used as extensions to real jobs
