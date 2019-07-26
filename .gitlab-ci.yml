@@ -204,7 +204,7 @@ infer:racket:cgc:
     INFER_DIR: $CI_PROJECT_DIR/infer-linux64-v0.16.0
     REPORT_DIR: $CI_PROJECT_DIR/racket/src/infer-out
   before_script:
-    - apt-get update && apt-get install -y unzip python libxml2-dev libfindbin-libs-perl make gcc g++ autoconf automake cmake curl git libc6-dev libsqlite3-dev opam openjdk-8-jdk-headless pkg-config python2.7
+    - apt-get update && apt-get install -y unzip python libxml2-dev libfindbin-libs-perl make gcc g++ autoconf automake cmake curl git libc6-dev libsqlite3-dev opam openjdk-8-jdk-headless pkg-config python2.7 wget
     - wget https://github.com/facebook/infer/releases/download/v0.16.0/infer-linux64-v0.16.0.tar.xz
     - tar -xvJf infer-linux64-v0.16.0.tar.xz
   script:
@@ -227,7 +227,7 @@ infer:racket:3m:
     CGC_INSTALL_DIR: $CI_PROJECT_DIR/install/racketcgc
     REPORT_DIR: $CI_PROJECT_DIR/racket/src/infer-out
   before_script:
-    - apt-get update && apt-get install -y unzip python libxml2-dev libfindbin-libs-perl make gcc g++ autoconf automake cmake curl git libc6-dev libsqlite3-dev opam openjdk-8-jdk-headless pkg-config python2.7
+    - apt-get update && apt-get install -y unzip python libxml2-dev libfindbin-libs-perl make gcc g++ autoconf automake cmake curl git libc6-dev libsqlite3-dev opam openjdk-8-jdk-headless pkg-config python2.7 wget
     - wget https://github.com/facebook/infer/releases/download/v0.16.0/infer-linux64-v0.16.0.tar.xz
     - tar -xvJf infer-linux64-v0.16.0.tar.xz
   script:
@@ -252,7 +252,7 @@ infer:racket:cs:
     MMM_INSTALL_DIR: $CI_PROJECT_DIR/install/racket3m
     REPORT_DIR: $CI_PROJECT_DIR/racket/src/infer-out
   before_script:
-    - apt-get update && apt-get install -y unzip python libxml2-dev libfindbin-libs-perl make gcc g++ uuid-dev git autoconf automake cmake curl git libc6-dev libsqlite3-dev opam openjdk-8-jdk-headless pkg-config python2.7
+    - apt-get update && apt-get install -y unzip python libxml2-dev libfindbin-libs-perl make gcc g++ uuid-dev git autoconf automake cmake curl git libc6-dev libsqlite3-dev opam openjdk-8-jdk-headless pkg-config python2.7 wget
     - wget https://github.com/facebook/infer/releases/download/v0.16.0/infer-linux64-v0.16.0.tar.xz
     - tar -xvJf infer-linux64-v0.16.0.tar.xz
   script:
