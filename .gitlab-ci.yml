@@ -215,7 +215,9 @@ infer:racket:cgc:
     - export PATH=$INFER_DIR/bin:$PATH
     - cd racket/src
     - ./configure --disable-strip --enable-cgcdefault --enable-jit --enable-foreign --enable-places --enable-futures --enable-float --disable-docs --enable-cify --enable-pthread
-    - infer run -- make
+    - export cpus=$(grep -c ^processor /proc/cpuinfo)
+    - echo "Detected $cpus cpus"
+    - infer -j $((cpus / 2)) run -- make
   artifacts:
     paths:
       - $REPORT_DIR
@@ -242,7 +244,9 @@ infer:racket:3m:
     - export PATH=$INFER_DIR/bin:$PATH
     - cd racket/src
     - ./configure --disable-strip --enable-cgcdefault --enable-jit --enable-foreign --enable-places --enable-futures --enable-float --disable-docs --enable-cify --enable-pthread --enable-racket=$CGC_INSTALL_DIR/bin/racket
-    - infer run -- make
+    - export cpus=$(grep -c ^processor /proc/cpuinfo)
+    - echo "Detected $cpus cpus"
+    - infer -j $((cpus / 2)) run -- make
   dependencies:
     - build:racket:cgc
   artifacts:
@@ -273,7 +277,9 @@ infer:racket:cs:
     - rm -r ChezScheme || true
     - git clone --depth=1 --recurse-submodules -j8 https://github.com/racket/ChezScheme
     - ./configure --disable-strip  --enable-compress --disable-docs --enable-pthread --enable-racket=$MMM_INSTALL_DIR/bin/racket --enable-csdefault --enable-csonly 
-    - infer run -- make
+    - export cpus=$(grep -c ^processor /proc/cpuinfo)
+    - echo "Detected $cpus cpus"
+    - infer -j $((cpus / 2)) run -- make
   dependencies:
     - build:racket:3m
   artifacts:
