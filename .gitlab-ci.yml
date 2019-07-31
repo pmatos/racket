@@ -1,3 +1,6 @@
+# Default image
+image: debian:stable-slim
+
 stages:
   - stage1
   - stage2
