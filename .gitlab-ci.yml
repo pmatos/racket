@@ -129,7 +129,7 @@ build:racket:armv7l:cgc:
     - apt-get update && apt-get install -y unzip python libxml2-dev libfindbin-libs-perl make gcc g++
   script:
     - cd racket/src
-    - ./configure --prefix=$INSTALL_DIR --enable-cgcdefault --enable-jit --enable-foreign --enable-places --enable-futures --enable-float --disable-docs --enable-cify --enable-pthread
+    - ./configure --prefix=$INSTALL_DIR --enable-cgcdefault --enable-jit --enable-foreign --enable-places --enable-float --disable-docs --enable-cify --enable-pthread
     - export cpus=$(grep -c ^processor /proc/cpuinfo)
     - make -l $cpus -j $((cpus+1))
     - make -j  $((cpus+1)) install
@@ -149,7 +149,7 @@ build:racket:armv7l:3m:
     - apt-get update && apt-get install -y unzip python libxml2-dev libfindbin-libs-perl make gcc g++
   script:
     - cd racket/src
-    - ./configure --prefix=$INSTALL_DIR --enable-jit --enable-foreign --enable-places --enable-futures --enable-float --disable-docs --enable-cify --enable-pthread --enable-racket=$CGC_INSTALL_DIR/bin/racket
+    - ./configure --prefix=$INSTALL_DIR --enable-jit --enable-foreign --enable-places --enable-float --disable-docs --enable-cify --enable-pthread --enable-racket=$CGC_INSTALL_DIR/bin/racket
     - export cpus=$(grep -c ^processor /proc/cpuinfo)
     - make -l $cpus -j $((cpus+1))
     - make -j  $((cpus+1)) install
