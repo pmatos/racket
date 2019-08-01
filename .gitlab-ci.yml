@@ -129,7 +129,7 @@ build:racket:armv7l:cgc:
     - apt-get update && apt-get install -y unzip python libxml2-dev libfindbin-libs-perl make gcc g++
   script:
     - cd racket/src
-    - ./configure --prefix=$INSTALL_DIR --enable-cgcdefault --enable-jit --enable-foreign --enable-float --disable-docs --enable-pthread
+    - ./configure --prefix=$INSTALL_DIR --enable-cgcdefault 
     - export cpus=$(grep -c ^processor /proc/cpuinfo)
     - make -l $cpus -j $((cpus+1))
     - make -j  $((cpus+1)) install
