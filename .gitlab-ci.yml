@@ -132,8 +132,8 @@ build:racket:armv7l:cgc:
     - cd racket/src
     - ./configure --prefix=$INSTALL_DIR --enable-cgcdefault 
     - export cpus=$(grep -c ^processor /proc/cpuinfo)
-    - make -l $cpus -j $((cpus+1))
-    - make -j  $((cpus+1)) install
+    - make -l $cpus -j $((cpus/2))
+    - make -j  $((cpus/2)) install
   artifacts:
     paths:
       - $INSTALL_DIR
@@ -153,8 +153,8 @@ build:racket:armv7l:3m:
     - cd racket/src
     - ./configure --prefix=$INSTALL_DIR --enable-jit --enable-foreign --enable-places --enable-float --disable-docs --enable-cify --enable-pthread --enable-racket=$CGC_INSTALL_DIR/bin/racket
     - export cpus=$(grep -c ^processor /proc/cpuinfo)
-    - make -l $cpus -j $((cpus+1))
-    - make -j  $((cpus+1)) install
+    - make -l $cpus -j $((cpus/2))
+    - make -j  $((cpus/2)) install
   dependencies:
     - build:racket:armv7l:cgc
   artifacts:
@@ -178,8 +178,8 @@ build:racket:armv7l:cs:
     - git clone --depth=1 --recurse-submodules -j8 https://github.com/racket/ChezScheme
     - ./configure --prefix=$INSTALL_DIR --enable-compress --disable-docs --enable-pthread --enable-racket=$MMM_INSTALL_DIR/bin/racket --enable-csdefault --enable-csonly
     - export cpus=$(grep -c ^processor /proc/cpuinfo)
-    - make -l $cpus -j $((cpus+1))
-    - make -j  $((cpus+1)) install
+    - make -l $cpus -j $((cpus/2))
+    - make -j  $((cpus/2)) install
   dependencies:
     - build:racket:armv7l:3m
   artifacts:
