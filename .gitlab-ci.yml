@@ -119,6 +119,7 @@ build:racket:cs:
 
 # Build racket on armv7l
 build:racket:armv7l:cgc:
+  image: raspbian/stretch
   stage: stage2
   tags:
     - linux
@@ -138,6 +139,7 @@ build:racket:armv7l:cgc:
       - $INSTALL_DIR
 
 build:racket:armv7l:3m:
+  image: raspbian/stretch
   stage: stage3
   tags:
     - linux
@@ -160,6 +162,7 @@ build:racket:armv7l:3m:
       - $INSTALL_DIR
 
 build:racket:armv7l:cs:
+  image: raspbian/stretch
   stage: stage4
   tags:
     - linux
@@ -435,6 +438,7 @@ scan:racket:cs:
 
 # Test templates for armv7l
 .test:armv7l:racket:test:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -447,6 +451,7 @@ scan:racket:cs:
       - test.log
       
 .test:armv7l:racket:contract:all:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -458,6 +463,7 @@ scan:racket:cs:
       - test.log
 
 .test:armv7l:json:json:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -469,6 +475,7 @@ scan:racket:cs:
       - test.log
 
 .test:armv7l:file:main:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -480,6 +487,7 @@ scan:racket:cs:
       - test.log
 
 .test:armv7l:net:head:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -491,6 +499,7 @@ scan:racket:cs:
       - test.log
     
 .test:armv7l:net:uri-codec:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -502,6 +511,7 @@ scan:racket:cs:
       - test.log
 
 .test:armv7l:net:url:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -513,6 +523,7 @@ scan:racket:cs:
       - test.log
 
 .test:armv7l:net:url-port:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -524,6 +535,7 @@ scan:racket:cs:
       - test.log
       
 .test:armv7l:net:encoders:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -535,6 +547,7 @@ scan:racket:cs:
       - test.log
 
 .test:armv7l:openssl:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -546,6 +559,7 @@ scan:racket:cs:
       - test.log
 
 .test:armv7l:match:main:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -557,6 +571,7 @@ scan:racket:cs:
       - test.log
 
 .test:armv7l:zo-path:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -568,6 +583,7 @@ scan:racket:cs:
       - test.log
 
 .test:armv7l:xml:test:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -579,6 +595,7 @@ scan:racket:cs:
       - test.log
 
 .test:armv7l:db:all-tests:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
@@ -590,6 +607,7 @@ scan:racket:cs:
       - test.log
 
 .test:armv7l:stxparse:
+  image: raspbian/stretch
   tags:
     - linux
     - armv7l
