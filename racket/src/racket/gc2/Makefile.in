@@ -502,6 +502,11 @@ foreign.@LTO@: $(XSRCDIR)/foreign.c
 main.@LTO@: $(XSRCDIR)/main.c
 	$(CC) $(ALL_CFLAGS) -c $(XSRCDIR)/main.c -o main.@LTO@
 
+gmp_alpha_gcc.@LTO@: $(srcdir)/gmp/gmp_alpha_gcc.s
+	$(AS) -o gmp_alpha_gcc.@LTO@ $(srcdir)/gmp/gmp_alpha_gcc.s
+gmp_arm_gcc.@LTO@: $(srcdir)/gmp/gmp_arm_gcc.s
+	$(AS) -o gmp_arm_gcc.@LTO@ $(srcdir)/gmp/gmp_arm_gcc.s
+
 mzcom.@LTO@: $(srcdir)/../../mzcom/mzcom.cxx
 	$(CC) -DMZCOM_3M $(ALL_CFLAGS) -fno-exceptions -c $(srcdir)/../../mzcom/mzcom.cxx -o mzcom.@LTO@
 mzobj.@LTO@: $(XSRCDIR)/mzobj.cxx
