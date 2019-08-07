@@ -1234,7 +1234,7 @@ test:armv7l:racket:test:armv7l:cgc:
   extends: .test:armv7l:racket:test
   allow_failure: true
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1248,7 +1248,7 @@ test:armv7l:racket:test:armv7l:3m:
   allow_failure: true
   extends: .test:armv7l:racket:test
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1262,7 +1262,7 @@ test:armv7l:racket:test:armv7l:cs:
   allow_failure: true
   extends: .test:armv7l:racket:test
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1276,7 +1276,7 @@ test:armv7l:racket:contract:all:cgc:
   stage: stage3
   extends: .test:armv7l:racket:contract:all
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates sqlite
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1289,7 +1289,7 @@ test:armv7l:racket:contract:all:3m:
   stage: stage4
   extends: .test:armv7l:racket:contract:all
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates sqlite
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1302,7 +1302,7 @@ test:armv7l:racket:contract:all:cs:
   stage: stage5
   extends: .test:armv7l:racket:contract:all
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates sqlite
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1316,7 +1316,7 @@ test:armv7l:json:json:cgc:
   stage: stage3
   extends: .test:armv7l:json:json
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1329,7 +1329,7 @@ test:armv7l:json:json:3m:
   stage: stage4
   extends: .test:armv7l:json:json
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1342,7 +1342,7 @@ test:armv7l:json:json:cs:
   stage: stage5
   extends: .test:armv7l:json:json
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1356,7 +1356,7 @@ test:armv7l:file:main:cgc:
   stage: stage3
   extends: .test:armv7l:file:main
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1369,7 +1369,7 @@ test:armv7l:file:main:3m:
   stage: stage4
   extends: .test:armv7l:file:main
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1382,7 +1382,7 @@ test:armv7l:file:main:cs:
   stage: stage5
   extends: .test:armv7l:file:main
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1396,7 +1396,7 @@ test:armv7l:net:head:cgc:
   stage: stage3
   extends: .test:armv7l:net:head
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1407,7 +1407,7 @@ test:armv7l:net:head:3m:
   stage: stage4
   extends: .test:armv7l:net:head
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1420,7 +1420,7 @@ test:armv7l:net:head:cs:
   stage: stage5
   extends: .test:armv7l:net:head
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1434,7 +1434,7 @@ test:armv7l:net:uri-codec:cgc:
   stage: stage3
   extends: .test:armv7l:net:uri-codec
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1447,7 +1447,7 @@ test:armv7l:net:uri-codec:3m:
   stage: stage4
   extends: .test:armv7l:net:uri-codec
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1460,7 +1460,7 @@ test:armv7l:net:uri-codec:cs:
   stage: stage5
   extends: .test:armv7l:net:uri-codec
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1474,7 +1474,7 @@ test:armv7l:net:url:cgc:
   stage: stage3
   extends: .test:armv7l:net:url
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1488,7 +1488,7 @@ test:armv7l:net:url:3m:
   allow_failure: true
   extends: .test:armv7l:net:url
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1501,7 +1501,7 @@ test:armv7l:net:url:cs:
   stage: stage5
   extends: .test:armv7l:net:url
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1515,7 +1515,7 @@ test:armv7l:net:url-port:cgc:
   stage: stage3
   extends: .test:armv7l:net:url-port
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1529,7 +1529,7 @@ test:armv7l:net:url-port:3m:
   allow_failure: true
   extends: .test:armv7l:net:url-port
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1542,7 +1542,7 @@ test:armv7l:net:url-port:cs:
   stage: stage5
   extends: .test:armv7l:net:url-port
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1556,7 +1556,7 @@ test:armv7l:net:encoders:cgc:
   stage: stage3
   extends: .test:armv7l:net:encoders
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1569,7 +1569,7 @@ test:armv7l:net:encoders:3m:
   stage: stage4
   extends: .test:armv7l:net:encoders
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1582,7 +1582,7 @@ test:armv7l:net:encoders:cs:
   stage: stage5
   extends: .test:armv7l:net:encoders
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1597,7 +1597,7 @@ test:armv7l:openssl:cgc:
   allow_failure: true
   extends: .test:armv7l:openssl
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1611,7 +1611,7 @@ test:armv7l:openssl:3m:
   allow_failure: true
   extends: .test:armv7l:openssl
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1625,7 +1625,7 @@ test:armv7l:openssl:cs:
   allow_failure: true
   extends: .test:armv7l:openssl
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1639,7 +1639,7 @@ test:armv7l:match:main:cgc:
   stage: stage3
   extends: .test:armv7l:match:main
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1652,7 +1652,7 @@ test:armv7l:match:main:3m:
   stage: stage4
   extends: .test:armv7l:match:main
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1665,7 +1665,7 @@ test:armv7l:match:main:cs:
   stage: stage5
   extends: .test:armv7l:match:main
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1679,7 +1679,7 @@ test:armv7l:zo-path:cgc:
   stage: stage3
   extends: .test:armv7l:zo-path
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1692,7 +1692,7 @@ test:armv7l:zo-path:3m:
   stage: stage4
   extends: .test:armv7l:zo-path
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1705,7 +1705,7 @@ test:armv7l:zo-path:cs:
   stage: stage5
   extends: .test:armv7l:zo-path
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1719,7 +1719,7 @@ test:armv7l:xml:test:armv7l:cgc:
   stage: stage3
   extends: .test:armv7l:xml:test
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1732,7 +1732,7 @@ test:armv7l:xml:test:armv7l:3m:
   stage: stage4
   extends: .test:armv7l:xml:test
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1745,7 +1745,7 @@ test:armv7l:xml:test:armv7l:cs:
   stage: stage5
   extends: .test:armv7l:xml:test
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1759,7 +1759,7 @@ test:armv7l:db:all-tests:cgc:
   stage: stage3
   extends: .test:armv7l:db:all-tests
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1772,7 +1772,7 @@ test:armv7l:db:all-tests:3m:
   stage: stage4
   extends: .test:armv7l:db:all-tests
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1785,7 +1785,7 @@ test:armv7l:db:all-tests:cs:
   stage: stage5
   extends: .test:armv7l:db:all-tests
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
@@ -1799,7 +1799,7 @@ test:armv7l:stxparse:cgc:
   stage: stage3
   extends: .test:armv7l:stxparse
   dependencies:
-    - build:racket:cgc
+    - build:racket:armv7l:cgc
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcgc/bin:$PATH
@@ -1812,7 +1812,7 @@ test:armv7l:stxparse:3m:
   stage: stage4
   extends: .test:armv7l:stxparse
   dependencies:
-    - build:racket:3m
+    - build:racket:armv7l:3m
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racket3m/bin:$PATH
@@ -1825,7 +1825,7 @@ test:armv7l:stxparse:cs:
   stage: stage5
   extends: .test:armv7l:stxparse
   dependencies:
-    - build:racket:cs
+    - build:racket:armv7l:cs
   before_script:
     - apt-get update && apt-get install -y openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev
     - export PATH=$CI_PROJECT_DIR/install/racketcs/bin:$PATH
