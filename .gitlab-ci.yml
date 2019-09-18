@@ -51,7 +51,8 @@ prepare-cache:llvm:
 # Build Windows10
 build:racket:win10:vs2019:
   stage: stage2
-  tags: win10
+  tags:
+    - win10
   script:
     - dir
 
