@@ -48,6 +48,13 @@ prepare-cache:llvm:
       - $INSTALL_DIR
     expire_in: 1 week
 
+# Build Windows10
+build:racket:win10:vs2019:
+  stage: stage2
+  tags: win10
+  script:
+    - dir
+
 # Build cgc
 build:racket:cgc:
   stage: stage2
