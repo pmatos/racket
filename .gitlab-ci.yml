@@ -54,7 +54,9 @@ build:racket:win10:vs2019:
   tags:
     - win10
   script:
-    - dir
+    - cd racket\src\worksp
+    - msvcprep.bat
+    - build.bat
 
 # Build cgc
 build:racket:cgc:
