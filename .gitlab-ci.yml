@@ -55,6 +55,7 @@ build:racket:win10:vs2019:
     - win10
   script:
     - cd racket\src\worksp
+    - dir
     - msvcprep.bat
     - build.bat
 
