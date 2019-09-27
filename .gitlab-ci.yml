@@ -55,9 +55,8 @@ build:racket:win10:vs2019:
     - win10
   script:
     - cd racket\src\worksp
-    - dir
-    - msvcprep.bat x86_amd64
-    - build.bat
+    - Start-Process "cmd.exe" "/c .\msvcprep.bat x86_amd64"
+    - Start-Process "cmd.exe" "/c .\build.bat"
 
 # Build cgc
 build:racket:cgc:
