@@ -77,6 +77,25 @@ build:racket:cgc:
     paths:
       - $INSTALL_DIR
 
+build:racket:cgc:armv7l:
+  stage: stage2
+  image: pmatos/racket-ci:builddeps_armv7l
+  needs: ["noNeeds"]
+  tags:
+    - linux
+    - armv7l
+  variables:
+    INSTALL_DIR: $CI_PROJECT_DIR/install/racketcgc
+  script:
+    - cd racket/src
+    - ./configure --prefix=$INSTALL_DIR --enable-cgcdefault --enable-jit --enable-foreign --enable-places --enable-futures --enable-float --disable-docs --enable-cify --enable-pthread
+    - export cpus=$(grep -c ^processor /proc/cpuinfo)
+    - make -l $cpus -j $((cpus+1))
+    - make -j  $((cpus+1)) install
+  artifacts:
+    paths:
+      - $INSTALL_DIR
+
 build:racket:3m:
   stage: stage3
   image: pmatos/racket-ci:builddeps
@@ -84,6 +103,28 @@ build:racket:3m:
   tags:
     - linux
     - x86_64
+  variables:
+    CGC_INSTALL_DIR: $CI_PROJECT_DIR/install/racketcgc
+    INSTALL_DIR: $CI_PROJECT_DIR/install/racket3m
+  script:
+    - cd racket/src
+    - ./configure --prefix=$INSTALL_DIR --enable-jit --enable-foreign --enable-places --enable-futures --enable-float --disable-docs --enable-cify --enable-pthread --enable-racket=$CGC_INSTALL_DIR/bin/racket
+    - export cpus=$(grep -c ^processor /proc/cpuinfo)
+    - make -l $cpus -j $((cpus+1))
+    - make -j  $((cpus+1)) install
+  dependencies:
+    - build:racket:cgc
+  artifacts:
+    paths:
+      - $INSTALL_DIR
+
+build:racket:3m:armv7l:
+  stage: stage3
+  image: pmatos/racket-ci:builddeps_armv7l
+  needs: ["build:racket:cgc"]
+  tags:
+    - linux
+    - armv7l
   variables:
     CGC_INSTALL_DIR: $CI_PROJECT_DIR/install/racketcgc
     INSTALL_DIR: $CI_PROJECT_DIR/install/racket3m
@@ -1170,27 +1211,6 @@ prepare-cache:qemu:
     - .gitlab/build-test.sh --jobs $((cpus + 1)) --maxload ${cpus} --with-arch ${ARCH} --with-debian stretch --with-debian-mirror http://ftp.de.debian.org/debian/ --with-project-path ${CI_PROJECT_DIR} --with-chroot-path /tmp/racket-${ARCH}-${CI_COMMIT_SHORT_SHA}-chroot --with-qemu-path $INSTALL_DIR
   dependencies:
     - prepare-cache:qemu
-
-test:native:armv7l:
-  image: ubuntu:18.04
-  stage: stage6  
-  needs: ["noNeeds"]
-  allow_failure: true
-  variables:
-    ARCH: "armv7l"
-    INSTALL_DIR: $CI_PROJECT_DIR/install
-  tags:
-    - armv7l
-    - linux
-  before_script:
-    - ls -la
-    - find $INSTALL_DIR -type f
-    - export PATH=$INSTALL_DIR/bin:$PATH
-    - apt-get update
-  script:
-    - export cpus=$(grep -c ^processor /proc/cpuinfo)
-    - echo "Detected $cpus cpus"
-    - .gitlab/build-test.sh --jobs $((cpus + 1)) --maxload ${cpus} --with-arch ${ARCH} --with-debian stretch --with-debian-mirror http://ftp.de.debian.org/debian/ --with-project-path ${CI_PROJECT_DIR} --with-chroot-path /tmp/racket-${ARCH}-${CI_COMMIT_SHORT_SHA}-chroot --with-qemu-path $INSTALL_DIR
 
 # Emulation targets
 test:emulation:arm64:
