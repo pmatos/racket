@@ -88,7 +88,7 @@ build:racket:cgc:armv7l:
     INSTALL_DIR: $CI_PROJECT_DIR/install/racketcgc
   script:
     - cd racket/src
-    - ./configure --prefix=$INSTALL_DIR --enable-cgcdefault --enable-jit --enable-foreign --enable-places --enable-futures --enable-float --disable-docs --enable-cify --enable-pthread
+    - ./configure --prefix=$INSTALL_DIR --enable-cgcdefault --enable-foreign --enable-places --enable-futures --enable-float --disable-docs --enable-cify --enable-pthread
     - export cpus=$(grep -c ^processor /proc/cpuinfo)
     - make -l $cpus -j $((cpus+1))
     - make -j  $((cpus+1)) install
