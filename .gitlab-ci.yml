@@ -6,6 +6,14 @@ stages:
   - stage5
   - stage6
 
+# Global retry
+# Always retry if a job fails due to a runner system failure
+retry:
+  max: 2
+  when:
+    - runner_system_failure
+    - stuck_or_timeout_failure
+  
 # Workaround to gitlab#30361
 noNeeds:
   image: alpine:latest 
