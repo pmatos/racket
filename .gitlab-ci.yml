@@ -8,11 +8,12 @@ stages:
 
 # Global retry
 # Always retry if a job fails due to a runner system failure
-retry:
-  max: 2
-  when:
-    - runner_system_failure
-    - stuck_or_timeout_failure
+.global-retry:
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
   
 # Workaround to gitlab#30361
 noNeeds:
@@ -31,6 +32,7 @@ noNeeds:
 # Also, this should only be performed once. Once in cache llvm won't be build anymore
 # until we force it.
 prepare-cache:llvm:
+  extends: .global-retry
   image: debian:stable-slim
   stage: stage1
   tags:
@@ -67,6 +69,7 @@ prepare-cache:llvm:
 
 # Build cgc
 build:racket:cgc:
+  extends: .global-retry
   stage: stage2
   image: pmatos/racket-ci:builddeps
   needs: ["noNeeds"]
@@ -86,6 +89,7 @@ build:racket:cgc:
       - $INSTALL_DIR
 
 build:racket:3m:
+  extends: .global-retry
   stage: stage3
   image: pmatos/racket-ci:builddeps
   needs: ["build:racket:cgc"]
@@ -108,6 +112,7 @@ build:racket:3m:
       - $INSTALL_DIR
 
 build:racket:cs:
+  extends: .global-retry
   stage: stage4
   image: pmatos/racket-ci:builddeps
   needs: ["build:racket:cgc"]
@@ -133,6 +138,7 @@ build:racket:cs:
 
 # Build racket with scan-build
 scan:racket:cgc:
+  extends: .global-retry
   stage: stage2
   needs: ["prepare-cache:llvm"]
   tags:
@@ -158,6 +164,7 @@ scan:racket:cgc:
       - $REPORT_DIR
 
 scan:racket:3m:
+  extends: .global-retry
   stage: stage3
   needs: ["prepare-cache:llvm", "build:racket:cgc"]
   tags:
@@ -185,6 +192,7 @@ scan:racket:3m:
       - $REPORT_DIR
 
 scan:racket:cs:
+  extends: .global-retry
   stage: stage4
   needs: ["prepare-cache:llvm", "build:racket:3m"]
   tags:
@@ -218,6 +226,7 @@ scan:racket:cs:
 # Jobs starting with . are templates to be used as extensions to real jobs
 #
 .test:racket:test:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -231,6 +240,7 @@ scan:racket:cs:
       - test.log
       
 .test:racket:contract:all:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -243,6 +253,7 @@ scan:racket:cs:
       - test.log
 
 .test:json:json:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -255,6 +266,7 @@ scan:racket:cs:
       - test.log
 
 .test:file:main:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -267,6 +279,7 @@ scan:racket:cs:
       - test.log
 
 .test:net:head:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -279,6 +292,7 @@ scan:racket:cs:
       - test.log
     
 .test:net:uri-codec:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -291,6 +305,7 @@ scan:racket:cs:
       - test.log
 
 .test:net:url:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -303,6 +318,7 @@ scan:racket:cs:
       - test.log
 
 .test:net:url-port:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -315,6 +331,7 @@ scan:racket:cs:
       - test.log
       
 .test:net:encoders:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -327,6 +344,7 @@ scan:racket:cs:
       - test.log
 
 .test:openssl:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -339,6 +357,7 @@ scan:racket:cs:
       - test.log
 
 .test:match:main:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -351,6 +370,7 @@ scan:racket:cs:
       - test.log
 
 .test:zo-path:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -363,6 +383,7 @@ scan:racket:cs:
       - test.log
 
 .test:xml:test:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -375,6 +396,7 @@ scan:racket:cs:
       - test.log
 
 .test:db:all-tests:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -387,6 +409,7 @@ scan:racket:cs:
       - test.log
 
 .test:stxparse:
+  extends: .global-retry
   image: pmatos/racket-ci:testdeps
   tags:
     - linux
@@ -1013,6 +1036,7 @@ test:stxparse:cs:
 ## The following jobs build/test racket and racketcs with ubsan enabled
 ## 
 .prepare:
+  extends: .global-retry
   stage: stage5
   image: ubuntu:18.04
   needs: ["noNeeds"]
@@ -1100,6 +1124,7 @@ test:ubsan:cs:
 # * ppc64el
 
 prepare-cache:qemu:
+  extends: .global-retry
   image: ubuntu:18.04
   stage: stage1
   tags:
@@ -1131,6 +1156,7 @@ prepare-cache:qemu:
     expire_in: 1 week
       
 .preparearch:
+  extends: .global-retry
   image: ubuntu:18.04
   stage: stage6
   needs: ["prepare-cache:qemu"]
@@ -1256,6 +1282,7 @@ test:emulation:ppc64el:
 # Emulation targets with --disable-generations
 
 .preparearch:nogenerations:
+  extends: .global-retry
   image: ubuntu:18.04
   needs: ["prepare-cache:qemu"]
   stage: stage6
@@ -1335,6 +1362,7 @@ test:emulation:nogenerations:ppc64el:
 
 # CS
 .preparearch:cs:
+  extends: .global-retry
   image: ubuntu:18.04
   needs: ["prepare-cache:qemu"]
   stage: stage5
