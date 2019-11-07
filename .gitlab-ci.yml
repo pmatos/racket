@@ -14,6 +14,8 @@ stages:
     when:
       - runner_system_failure
       - stuck_or_timeout_failure
+      - unknown_failure
+      - api_failure
   
 # Workaround to gitlab#30361
 noNeeds:
