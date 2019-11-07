@@ -1,7 +1,7 @@
 stages:
-  - stage1
-  - stage2
-  - stage3
+  - prepare-tools
+  - build
+  - test
   - stage4
   - stage5
   - stage6
@@ -9,7 +9,7 @@ stages:
 # Workaround to gitlab#30361
 noNeeds:
   image: alpine:latest 
-  stage: stage1
+  stage: prepare-tools
   script:
     - echo "This build is a workaround for 'https://gitlab.com/gitlab-org/gitlab/issues/30631'"
   dependencies: []
@@ -24,7 +24,7 @@ noNeeds:
 # until we force it.
 prepare-cache:llvm:
   image: debian:stable-slim
-  stage: stage1
+  stage: prepare-tools
   tags:
     - linux
     - x86_64
@@ -59,7 +59,7 @@ prepare-cache:llvm:
 
 # Build cgc
 build:racket:cgc:
-  stage: stage2
+  stage: build
   image: pmatos/racket-ci:builddeps
   needs: ["noNeeds"]
   tags:
@@ -78,7 +78,7 @@ build:racket:cgc:
       - $INSTALL_DIR
 
 build:racket:3m:
-  stage: stage3
+  stage: test
   image: pmatos/racket-ci:builddeps
   needs: ["build:racket:cgc"]
   tags:
@@ -125,7 +125,7 @@ build:racket:cs:
 
 # Build racket with scan-build
 scan:racket:cgc:
-  stage: stage2
+  stage: build
   needs: ["prepare-cache:llvm"]
   tags:
     - linux
@@ -150,7 +150,7 @@ scan:racket:cgc:
       - $REPORT_DIR
 
 scan:racket:3m:
-  stage: stage3
+  stage: test
   needs: ["prepare-cache:llvm", "build:racket:cgc"]
   tags:
     - linux
@@ -394,7 +394,7 @@ scan:racket:cs:
 
 # Test: test:racket:test
 test:racket:test:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:racket:test
   allow_failure: true
@@ -437,7 +437,7 @@ test:racket:test:cs:
 
 # Test: test:racket:contract:all
 test:racket:contract:all:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:racket:contract:all
   dependencies:
@@ -477,7 +477,7 @@ test:racket:contract:all:cs:
 
 # Test: test:json:json
 test:json:json:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:json:json
   dependencies:
@@ -518,7 +518,7 @@ test:json:json:cs:
 
 # Test: test:file:main
 test:file:main:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:file:main
   dependencies:
@@ -558,7 +558,7 @@ test:file:main:cs:
 
 # Test: test:net:head
 test:net:head:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:net:head
   dependencies:
@@ -596,7 +596,7 @@ test:net:head:cs:
 
 # Test: test:net:uri-codec
 test:net:uri-codec:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:net:uri-codec
   dependencies:
@@ -636,7 +636,7 @@ test:net:uri-codec:cs:
 
 # Test: test:net:url
 test:net:url:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:net:url
   dependencies:
@@ -677,7 +677,7 @@ test:net:url:cs:
 
 # Test: test:net:url-port
 test:net:url-port:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:net:url-port
   dependencies:
@@ -718,7 +718,7 @@ test:net:url-port:cs:
 
 # Test: test:net:encoders
 test:net:encoders:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:net:encoders
   dependencies:
@@ -758,7 +758,7 @@ test:net:encoders:cs:
 
 # Test: test:openssl ca-certificates libfontconfig1-dev libpango1.0-dev libcairo2-dev libjpeg-dev libturbojpeg0-dev:basic
 test:openssl:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   allow_failure: true
   extends: .test:openssl
@@ -801,7 +801,7 @@ test:openssl:cs:
 
 # Test: test:match:main
 test:match:main:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:match:main
   dependencies:
@@ -841,7 +841,7 @@ test:match:main:cs:
 
 # Test: test:zo-path
 test:zo-path:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:zo-path
   dependencies:
@@ -881,7 +881,7 @@ test:zo-path:cs:
 
 # Test: test:xml:test
 test:xml:test:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:xml:test
   dependencies:
@@ -921,7 +921,7 @@ test:xml:test:cs:
 
 # Test: test:db:all-tests
 test:db:all-tests:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:db:all-tests
   dependencies:
@@ -961,7 +961,7 @@ test:db:all-tests:cs:
 
 # Test: test:stxparse
 test:stxparse:cgc:
-  stage: stage3
+  stage: test
   needs: ["build:racket:cgc"]
   extends: .test:stxparse
   dependencies:
@@ -1093,7 +1093,7 @@ test:ubsan:cs:
 
 prepare-cache:qemu:
   image: ubuntu:18.04
-  stage: stage1
+  stage: prepare-tools
   tags:
     - linux
     - x86_64
