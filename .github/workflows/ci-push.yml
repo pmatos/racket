@@ -190,28 +190,29 @@ jobs:
         path: ../racketcs-${{ matrix.os }}-x64_git${{ github.sha }}.tar.bz2
 
 # Tests
-  test-cgc:
+  test-racket:
     strategy:
       matrix:
+        type: [cgc, 3m, cs]
         os: [ubuntu-18.04] #, macos-latest]
         cify: [cify, nocify]
     
     runs-on: ${{ matrix.os }}
     
-    needs: build-racketcgc
+    needs: build-racket${{ matrix.type }}
     
     steps:
       - uses: actions/checkout@v1
       - uses: actions/download-artifact@master
         with:
-          name: racketcgc-${{ matrix.os }}-${{ matrix.cify }}-x64_git${{ github.sha }}
+          name: racket${{ matrix.type }}-${{ matrix.os }}-${{ matrix.cify }}-x64_git${{ github.sha }}
           path: ../
       - name: Untar
         working-directory: ../
-        run: tar -xvjf racketcgc-${{ matrix.os }}-${{ matrix.cify }}-x64_git${{ github.sha }}.tar.bz2
+        run: tar -xvjf racket${{ matrix.type }}-${{ matrix.os }}-${{ matrix.cify }}-x64_git${{ github.sha }}.tar.bz2
       - name: Extend PATH with Racket executable
         working-directory: ../
-        run: echo "::set-env name=PATH::$PWD/racketcgc/bin:$PATH"
+        run: echo "::set-env name=PATH::$PWD/racket${{ matrix.type }}/bin:$PATH"
       - name: Check for Racket
         run: racket --version
       - name: Install catalog and required packages
