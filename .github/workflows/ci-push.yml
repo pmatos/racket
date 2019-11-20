@@ -155,6 +155,7 @@ jobs:
       working-directory: ../
       run: tar -xvjf racketcgc-${{ matrix.os }}-nocify-x64_git${{ github.sha}}.tar.bz2
     - name: Install pkg dependencies
+      if: runner.os == 'Linux'
       run: |
         sudo apt update
         sudo apt install -y git uuid-dev
