@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04] #, macos-latest]
+        os: [ubuntu-18.04, macos-latest]
         cify: [cify, nocify]
         exclude:
           - os: macos-latest
@@ -26,7 +26,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Setup OS specific configure args
       if:  runner.os == 'macOS'
-      run: echo "::set-env name=RACKET_EXTRA_CONFIGURE_ARGS::--enable-xonx $RACKET_EXTRA_CONFIGURE_ARGS"
+      run: echo "::set-env name=RACKET_EXTRA_CONFIGURE_ARGS::--enable-macprefix $RACKET_EXTRA_CONFIGURE_ARGS"
     - name: Setup cify if enabled
       if: matrix.cify == 'cify'
       run: echo "::set-env name=CIFY_OPTION::--enable-cify"
@@ -68,7 +68,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04] #, macos-latest]
+        os: [ubuntu-18.04, macos-latest]
         cify: [cify, nocify]
         exclude:
           - os: macos-latest
@@ -85,7 +85,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Setup OS specific configure args
       if:  runner.os == 'macOS'
-      run: echo "::set-env name=RACKET_EXTRA_CONFIGURE_ARGS::--enable-xonx $RACKET_EXTRA_CONFIGURE_ARGS"
+      run: echo "::set-env name=RACKET_EXTRA_CONFIGURE_ARGS::--enable-macprefix $RACKET_EXTRA_CONFIGURE_ARGS"
     - name: Setup cify if enabled
       if: matrix.cify == 'cify'
       run: echo "::set-env name=CIFY_OPTION::--enable-cify"
@@ -134,7 +134,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04] #, macos-latest]
+        os: [ubuntu-18.04, macos-latest]
             
     runs-on: ${{ matrix.os }}
     needs: build-racketcgc
@@ -146,7 +146,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Setup OS specific configure args
       if:  runner.os == 'macOS'
-      run: echo "::set-env name=RACKET_EXTRA_CONFIGURE_ARGS::--enable-xonx $RACKET_EXTRA_CONFIGURE_ARGS"
+      run: echo "::set-env name=RACKET_EXTRA_CONFIGURE_ARGS::--enable-macprefix $RACKET_EXTRA_CONFIGURE_ARGS"
     - uses: actions/download-artifact@master
       with:
         name: racketcgc-${{ matrix.os }}-nocify-x64_git${{ github.sha }}
