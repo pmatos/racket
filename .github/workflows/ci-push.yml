@@ -194,7 +194,7 @@ jobs:
     strategy:
       matrix:
         type: [cgc, 3m, cs]
-        os: [ubuntu-18.04] #, macos-latest]
+        os: [ubuntu-18.04, macos-latest]
         cify: [cify, nocify]
     
     runs-on: ${{ matrix.os }}
