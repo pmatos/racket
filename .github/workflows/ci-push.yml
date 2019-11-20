@@ -14,9 +14,6 @@ jobs:
       matrix:
         os: [ubuntu-18.04, macos-latest]
         cify: [cify, nocify]
-        exclude:
-          - os: macos-latest
-            cify: cify
           
     runs-on: ${{ matrix.os }}
     env:
@@ -70,9 +67,6 @@ jobs:
       matrix:
         os: [ubuntu-18.04, macos-latest]
         cify: [cify, nocify]
-        exclude:
-          - os: macos-latest
-            cify: cify
             
     runs-on: ${{ matrix.os }}
     
