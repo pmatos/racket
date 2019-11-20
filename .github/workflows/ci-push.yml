@@ -187,6 +187,7 @@ jobs:
 # Tests
   test-cgc:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-18.04, macos-latest]
         cify: [cify, nocify]
