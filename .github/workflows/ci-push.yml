@@ -190,7 +190,7 @@ jobs:
         name: racketcs-${{ matrix.os }}-x64_git${{ github.sha }}
         path: ../racketcs-${{ matrix.os }}-x64_git${{ github.sha }}.tar.bz2
 
-  build-win:
+  build-win3m:
     runs-on: windows-latest
 
     # According to
@@ -205,8 +205,14 @@ jobs:
       shell: cmd
       run: |
         call msvcprep.bat x86_amd64
-        call build.bat
-        call ..\..\racket.exe csbuild.rkt -- --recurse-submodules --depth=1
+        build.bat
+    - name: Packaging using 7z
+      working-directory: .\racket
+      run: 7za a -t7z racket3m.7z lib/ *.exe
+    - uses: actions/upload-artifact@master
+      with: 
+        name: racket3m-win-x64_git${{ github.sha }}
+        path: racket\racket3m.7z
 
   # Tests
   # Unfortunately Actions does not support atm yaml anchors
