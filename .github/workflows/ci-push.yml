@@ -209,7 +209,7 @@ jobs:
     - name: Completing the build
       working-directory: .\racket
       shell: cmd
-      run: raco pkg install racket-lib
+      run: raco pkg install --auto racket-lib
     - name: Packaging using 7z
       working-directory: .\racket
       run: 7z.exe a -t7z racket3m-win-x64_git${{ github.sha }}.7z lib/ *.exe
@@ -247,7 +247,7 @@ jobs:
       - name: Completing the build
         working-directory: .\racket
         shell: cmd
-        run: raco pkg install racket-lib
+        run: raco pkg install --auto racket-lib
 
   # Tests
   # Unfortunately Actions does not support atm yaml anchors
