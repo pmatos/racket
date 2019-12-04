@@ -208,7 +208,7 @@ jobs:
         build.bat
     - name: Packaging using 7z
       working-directory: .\racket
-      run: 7za a -t7z racket3m.7z lib/ *.exe
+      run: 7z.exe a -t7z racket3m.7z lib/ *.exe
     - uses: actions/upload-artifact@master
       with: 
         name: racket3m-win-x64_git${{ github.sha }}
