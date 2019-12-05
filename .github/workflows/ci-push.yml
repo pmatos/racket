@@ -220,6 +220,7 @@ jobs:
 
   build-wincs:
     runs-on: windows-latest
+    needs: build-win3m
     
     steps:
       - uses: actions/checkout@v1
