@@ -242,6 +242,8 @@ jobs:
         working-directory: .\racket\src\worksp
         shell: cmd
         run: |
+          dir ..\..\..\
+          dir ..\..\..\racket3m
           call Racket.exe --version
           call msvcprep.bat x86_amd64
           Racket.exe csbuild.rkt --racketcs-suffix "" --pull -- --depth 1
