@@ -237,13 +237,13 @@ jobs:
         shell: cmd
         run: 7z.exe x racket3m-win-x64_git${{ github.sha }}.7z
       - name: Build
-        env: 
-          PATH: ..\racket3m\;%PATH%
         working-directory: .\racket\src\worksp
+        env: 
+          PATH: ..\..\..\..\racket3m\;%PATH%
         shell: cmd
         run: |
-          dir ..\..\..\
-          dir ..\..\..\racket3m
+          dir ..\..\..\..\
+          dir ..\..\..\..\racket3m
           call Racket.exe --version
           call msvcprep.bat x86_amd64
           Racket.exe csbuild.rkt --racketcs-suffix "" --pull -- --depth 1
