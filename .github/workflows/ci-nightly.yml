@@ -1,0 +1,12 @@
+name: CI Nightly
+
+# Will be nightly once merged
+on: [push]
+
+jobs:
+  test-selfhosted:
+    runs-on: [self-hosted, linux, x64]
+    
+    steps:
+    - name: Say hello
+      run: echo "Hello"
