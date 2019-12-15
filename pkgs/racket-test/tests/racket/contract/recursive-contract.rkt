@@ -138,9 +138,12 @@
         cpu)
       ;; Doubling the list length should not increase the
       ;; run time by more than a factor of three; try up
-      ;; to three times, just in case
-      (for/or ([i (in-range 3)])
-        (> (* 3 (time-it 4000))
-           (time-it 8000))))
-   #t
+      ;; to three times, just in case. A `#f` result means
+      ;; success, while a #t result shows the two times
+      (for/and ([i (in-range 3)])
+        (define 4k (time-it 4000))
+        (define 8k (time-it 8000))
+        (and (< (* 3 4k) 8k)
+             (list 4k 8k))))
+   #f
    do-not-double-wrap))
