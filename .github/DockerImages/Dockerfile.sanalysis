@@ -1,0 +1,25 @@
+FROM debian:buster-slim
+LABEL maintainer="pmatos@linki.tools"
+LABEL description="Debian Stable Slim image with clang static analysis dependencies pre-installed. Mostly used for Racket CI."
+
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y gcc git cmake wget unzip g++ python libxml2-dev && \
+    apt-get clean && \
+    wget https://github.com/Z3Prover/z3/releases/download/z3-4.8.7/z3-4.8.7-x64-ubuntu-16.04.zip && \
+    unzip z3-4.8.7-x64-ubuntu-16.04.zip && \
+    mv -v z3-4.8.7-x64-ubuntu-16.04/bin/* /usr/bin && \
+    mv -v z3-4.8.7-x64-ubuntu-16.04/include/* /usr/include && \
+    rm -R z3-4.8.7-x64-ubuntu-16.04/ z3-4.8.7-x64-ubuntu-16.04.zip && \
+    git clone --depth=1 -b release/8.x https://github.com/llvm/llvm-project.git && \
+    cd llvm-project && \
+    mkdir build && \
+    cd build && \
+    cmake -DCMAKE_INSTALL_PREFIX=/usr -DCLANG_ANALYZER_ENABLE_Z3_SOLVER=ON -DLLVM_TARGETS_TO_BUILD=X86 -DLLVM_ENABLE_PROJECTS=clang -DZ3_INCLUDE_DIR=/usr/include/ -DCMAKE_BUILD_TYPE=MinSizeRel ../llvm/ && \
+    export cpus=$(grep -c ^processor /proc/cpuinfo) && \
+    make -j$((cpus + 1)) -l$cpus && \
+    make -j$((cpus + 1)) -l$cpus install && \
+    cd ../ && \
+    rm -R build/ llvm-project/
+    
+CMD ["bash"]
