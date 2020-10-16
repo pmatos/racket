@@ -22,6 +22,8 @@
 #include "popcount.h"
 #include <assert.h>
 
+#include "rtrace.h"
+
 /* 
    GC Implementation
    -----------------
@@ -862,6 +864,9 @@ ptr GCENTRY(ptr tc, ptr count_roots_ls) {
     ptr ls;
     bucket_pointer_list *buckets_to_rebuild;
     uptr pre_finalization_size, pre_phantom_bytes;
+
+    trace_begin_gc(__func__);
+    
 #ifdef ENABLE_OBJECT_COUNTS
     ptr count_roots_counts = Snil;
     iptr count_roots_len;
@@ -1755,6 +1760,8 @@ ptr GCENTRY(ptr tc, ptr count_roots_ls) {
 
     ACCUM_REAL_TIME(all_accum, astep, astart);
     REPORT_TIME(fprintf(stderr, "%d all   +%ld ms  %ld ms  [real time]\n", MAX_CG, astep, all_accum));
+    
+    trace_end_gc();
 
     if (count_roots_ls != Sfalse) {
 #ifdef ENABLE_OBJECT_COUNTS
@@ -2895,6 +2902,7 @@ static void assign_sweeper(int n, thread_gc *t_tgc) {
 static void setup_sweepers(thread_gc *tgc) {
   int i, n, next = 0;
   ptr ls;
+  trace_begin_gc(__func__);
 
   assign_sweeper(main_sweeper_index, tgc);
 
@@ -2942,6 +2950,7 @@ static void setup_sweepers(thread_gc *tgc) {
     ADJUST_COUNTER(sweepers[idx].remotes_sent = 0);
     ADJUST_COUNTER(sweepers[idx].remotes_received = 0);
   }
+  trace_end_gc();
 }
 
 static s_thread_rv_t start_sweeper(void *_sweeper) {

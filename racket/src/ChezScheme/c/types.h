@@ -75,6 +75,7 @@ typedef int IFASLCODE;      /* fasl type codes */
 #endif
 
 #define ALREADY_PTR(p) (p)
+#include "rtrace.h"
 
 /* inline allocation --- no mutex required */
 /* find room allocates n bytes in space s and generation g into
@@ -82,12 +83,14 @@ typedef int IFASLCODE;      /* fasl type codes */
  * no space is left in the current segment.  n is assumed to be
  * an integral multiple of the object alignment. */
 #define find_gc_room_T(tgc, s, g, t, n, T, x) do {         \
+    trace_begin_gc("macro find_gc_room_T");                \
     thread_gc *TGC = tgc;                                  \
     iptr N_BYTES = n;                                      \
     ptr X = TGC->next_loc[g][s];                           \
     TGC->next_loc[g][s] = (ptr)((uptr)X + N_BYTES);        \
     if ((TGC->bytes_left[g][s] -= (n)) < 0) X = S_find_more_gc_room(tgc, s, g, N_BYTES, X); \
     (x) = T(TYPE(X, t));                                   \
+    trace_end_gc();                                        \
   } while(0)
 
 #define find_room(tc, s, g, t, n, x) find_gc_room_T(THREAD_GC(tc), s, g, t, n, ALREADY_PTR, x)
@@ -99,15 +102,17 @@ typedef int IFASLCODE;      /* fasl type codes */
 /* Like `find_room`, but always `space_new` and generation 0,
    so using the same bump pointer as most new allocation */
 #define newspace_find_room_T(tc, t, n, T, x) do {     \
-  ptr _tc = tc;\
-  uptr _ap = (uptr)AP(_tc);\
-  if ((uptr)n > ((uptr)EAP(_tc) - _ap)) {\
-    ptr _hp = S_get_more_room_help(_tc, _ap, t, n); \
-    (x) = T(_hp);                       \
-  } else {\
-    (x) = T(TYPE(_ap,t));                       \
-    AP(_tc) = (ptr)(_ap + n);\
-  }\
+    trace_begin_gc("macro newspace_find_room_T");     \
+    ptr _tc = tc;                                     \
+    uptr _ap = (uptr)AP(_tc);                         \
+    if ((uptr)n > ((uptr)EAP(_tc) - _ap)) {           \
+      ptr _hp = S_get_more_room_help(_tc, _ap, t, n); \
+      (x) = T(_hp);                                   \
+    } else {                                          \
+      (x) = T(TYPE(_ap,t));                           \
+      AP(_tc) = (ptr)(_ap + n);                       \
+    }                                                 \
+    trace_end_gc();                                   \
  } while(0)
 
 #define newspace_find_room(tc, t, n, x) newspace_find_room_T(tc, t, n, ALREADY_PTR, x)

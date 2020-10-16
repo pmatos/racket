@@ -15,7 +15,7 @@
  */
 
 #include "system.h"
-
+#include "rtrace.h"
 static thread_gc *free_thread_gcs;
 
 /* locally defined functions */
@@ -374,29 +374,41 @@ void S_mutex_acquire(scheme_mutex_t *m) NO_THREAD_SANITIZE {
   s_thread_t self = s_thread_self();
   iptr count;
   INT status;
-
+  trace_begin_gc(__func__);
+  
   if ((count = m->count) > 0 && s_thread_equal(m->owner, self)) {
-    if (count == most_positive_fixnum)
+    if (count == most_positive_fixnum) {
+      trace_end_gc();
       S_error1("mutex-acquire", "recursion limit exceeded for ~s", TO_PTR(m));
+    }
     m->count = count + 1;
+    trace_end_gc();
     return;
   }
 
-  if ((status = s_thread_mutex_lock(&m->pmutex)) != 0)
+  if ((status = s_thread_mutex_lock(&m->pmutex)) != 0) {
+    trace_end_gc();
     S_error1("mutex-acquire", "failed: ~a", S_strerror(status));
+  }
   m->owner = self;
   m->count = 1;
+  trace_end_gc();
+
 }
 
 INT S_mutex_tryacquire(scheme_mutex_t *m) NO_THREAD_SANITIZE {
   s_thread_t self = s_thread_self();
   iptr count;
   INT status;
+  trace_begin_gc(__func__);
 
   if ((count = m->count) > 0 && s_thread_equal(m->owner, self)) {
-    if (count == most_positive_fixnum)
+    if (count == most_positive_fixnum) {
+      trace_end_gc();
       S_error1("mutex-acquire", "recursion limit exceeded for ~s", TO_PTR(m));
+    }
     m->count = count + 1;
+    trace_end_gc();
     return 0;
   }
 
@@ -405,8 +417,10 @@ INT S_mutex_tryacquire(scheme_mutex_t *m) NO_THREAD_SANITIZE {
     m->owner = self;
     m->count = 1;
   } else if (status != EBUSY) {
+    trace_end_gc();
     S_error1("mutex-acquire", "failed: ~a", S_strerror(status));
   }
+  trace_end_gc();
   return status;
 }
 
@@ -496,6 +510,7 @@ static inline int s_thread_cond_timedwait(s_thread_cond_t *cond, s_thread_mutex_
 #define Srecord_ref(x,i) (((ptr *)((uptr)(x)+record_data_disp))[i])
 
 IBOOL S_condition_wait(c, m, t) s_thread_cond_t *c; scheme_mutex_t *m; ptr t; {
+  trace_begin_gc(__func__);
   ptr tc = get_thread_context();
   s_thread_t self = s_thread_self();
   iptr count;
@@ -565,6 +580,7 @@ IBOOL S_condition_wait(c, m, t) s_thread_cond_t *c; scheme_mutex_t *m; ptr t; {
       S_collect_waiting_tcs[collect_index] = (ptr)0;
   }
 
+  trace_end_gc();
   if (status == 0) {
     return 1;
   } else if (status == ETIMEDOUT) {

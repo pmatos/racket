@@ -200,14 +200,14 @@ gracketcs@NOT_OSX@@NOT_MINGW@: raw_gracketcs petite-v.boot scheme-v.boot racket-
 
 OWN_Z_LIB = $(SCHEME_TARGET_INC)/../../zlib/libz.a
 OWN_LZ4_LIB = $(SCHEME_TARGET_INC)/../../lz4/lib/liblz4.a
-SCHEME_LIB_DEPS = $(SCHEME_TARGET_INC)/libkernel.a @Z_LIB_DEP@ @LZ4_LIB_DEP@
-SCHEME_LIBS = $(SCHEME_TARGET_INC)/libkernel.a @Z_LIB@ @LZ4_LIB@
+SCHEME_LIB_DEPS = $(SCHEME_TARGET_INC)/libkernel.a @Z_LIB_DEP@ @LZ4_LIB_DEP@ @RTRACE_LIB@
+SCHEME_LIBS = $(SCHEME_TARGET_INC)/libkernel.a @Z_LIB@ @LZ4_LIB@ @RTRACE_LIB@
 
 BOOT_OBJ_DEPS = boot.o $(SCHEME_LIB_DEPS) rktio/librktio.a
 BOOT_OBJS = boot.o $(SCHEME_LIBS) rktio/librktio.a
 
 raw_racketcs@NOT_OSX@: main.o boot.o $(BOOT_OBJ_DEPS)
-	$(CC) $(CFLAGS) -o raw_racketcs main.o $(BOOT_OBJS) $(LDFLAGS) $(LIBS)
+	g++ $(CFLAGS) -o raw_racketcs main.o $(BOOT_OBJS) $(LDFLAGS) $(LIBS)
 	@POST_LINKER@ raw_racketcs
 
 raw_gracketcs: grmain.o boot.o $(BOOT_OBJ_DEPS)

@@ -33,6 +33,7 @@ m4_include(../ac/vm_arg.m4)
 m4_include(../ac/crossany_arg.m4)
 AC_ARG_ENABLE(libz,       [  --enable-libz           use installed libz if available])
 AC_ARG_ENABLE(liblz4,     [  --enable-liblz4         use installed liblz4 if available])
+AC_ARG_ENABLE(librtrace,  [  --enable-rtrace=<path>  use tracing events using library in <path>])
 
 m4_include(../ac/sdk.m4)
 
@@ -80,7 +81,7 @@ show_explicitly_set "${enable_target}" "cross-build machine type"
 m4_include(../ac/natipkg_show.m4)
 show_explicitly_enabled "${enable_libz}" "Installed libz"
 show_explicitly_enabled "${enable_liblz4}" "Installed liblz4"
-
+show_explicitly_set "${enable_rtrace}" "Using tracing events"
 m4_include(../ac/vm.m4)
 
 m4_include(../ac/instlib.m4)
@@ -150,6 +151,10 @@ LZ4_LIB='$(OWN_LZ4_LIB)'
 LZ4_LIB_UNPACK='$(AR) x $(OWN_LZ4_LIB)'
 
 enable_pthread_by_default=yes
+
+if test "${enable_target}" != "" ; then
+   RTRACE_LIB='${enable_rtrace}'
+fi
 
 ###### Autoconfigure #######
 
@@ -748,6 +753,7 @@ AC_SUBST(RUN_RACKET)
 AC_SUBST(INSTALL_SETUP_FLAGS)
 AC_SUBST(INSTALL_SETUP_RACKET_FLAGS)
 AC_SUBST(INSTALL_LIBS_ENABLE)
+AC_SUBST(RTRACE_LIB)
 
 makefiles="Makefile"
 
