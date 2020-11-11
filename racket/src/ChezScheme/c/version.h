@@ -123,9 +123,9 @@ typedef int tputsputcchar;
 #ifndef DISABLE_X11
 # define LIBX11 "libX11.so"
 #endif
+#define _LARGEFILE64_SOURCE
 #define LSEEK lseek64
 #define OFF_T off64_t
-#define _LARGEFILE64_SOURCE
 #define SECATIME(sb) (sb).st_atim.tv_sec
 #define SECCTIME(sb) (sb).st_ctim.tv_sec
 #define SECMTIME(sb) (sb).st_mtim.tv_sec

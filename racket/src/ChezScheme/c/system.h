@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+#ifndef CHEZ_SYSTEM_H
+#define CHEZ_SYSTEM_H
+
 #include "scheme.h"
 #include "equates.h"
 #ifdef FEATURE_WINDOWS
@@ -25,6 +28,10 @@
 #define _WIN32_WINNT WINVER
 #include <windows.h>
 #endif
+
+#ifndef O_BINARY
+#define O_BINARY 0
+#endif /* O_BINARY */
 
 #include "version.h"
 #include <stdio.h>
@@ -46,3 +53,5 @@
 #include "segment.h"
 
 #include "atomic.h"
+
+#endif /* CHEZ_SYSTEM_H */

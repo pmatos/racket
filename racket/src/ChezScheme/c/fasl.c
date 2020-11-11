@@ -308,9 +308,10 @@ void S_fasl_init() {
 }
 
 ptr S_fasl_read(INT fd, IFASLCODE situation, ptr path, ptr externals) {
+  ptr x;
+  struct unbufFaslFileObj uffo;
   ptr tc = get_thread_context();
-  ptr x; struct unbufFaslFileObj uffo;
-
+  
   uffo.path = path;
   uffo.type = UFFO_TYPE_FD;
   uffo.fd = fd;
@@ -332,6 +333,8 @@ ptr S_boot_read(INT fd, const char *path) {
   ptr tc = get_thread_context();
   struct unbufFaslFileObj uffo;
 
+  fprintf (stderr, "S_boot_read: %s\n", path);
+  
   uffo.path = Sstring_utf8(path, -1);
   uffo.type = UFFO_TYPE_FD;
   uffo.fd = fd;
@@ -436,11 +439,12 @@ char *S_lookup_machine_type(uptr n) {
 }
 
 static ptr fasl_entry(ptr tc, IFASLCODE situation, unbufFaslFile uf, ptr externals) {
+  fprintf(stderr, "fasl_entry\n");
   ptr x; ptr strbuf = S_G.null_string;
   octet tybuf[1]; IFASLCODE ty; iptr size;
   /* gcc (GCC) 4.8.5 20150623 (Red Hat 4.8.5-28) co-locates buf and x if we put the declaration of buf down where we use it */
   octet buf[SBUFSIZ];
-
+  
   for (;;) {
     if (uf_read(uf, tybuf, 1) < 0) return Seof_object; 
     ty = tybuf[0];
@@ -509,6 +513,7 @@ static ptr fasl_entry(ptr tc, IFASLCODE situation, unbufFaslFile uf, ptr externa
 
           PREPARE_BYTEVECTOR(SRCBV(tc), src_size);
           PREPARE_BYTEVECTOR(DSTBV(tc), dest_size);
+          fprintf(stderr, "fasl_entry: fasl_type_lz4/gzip, src_size: %ld, dest_size: %ld\n", src_size, dest_size);
           if (uf_read(uf, &BVIT(SRCBV(tc),0), src_size) < 0)
             S_error1("", "unexpected eof in fasl file ~a", uf->path);
           result = S_bytevector_uncompress(DSTBV(tc), 0, dest_size, SRCBV(tc), 0, src_size,
@@ -525,6 +530,7 @@ static ptr fasl_entry(ptr tc, IFASLCODE situation, unbufFaslFile uf, ptr externa
           break;
         }
         case fasl_type_uncompressed: {
+          fprintf(stderr, "fasl_entry: fasl_type_uncompressed\n");
           ffo.size = size - 2; /* adjust for u8 compression type and u8 fasl type */
           ffo.next = ffo.end = ffo.buf = buf;
           bv = (ptr)0;
@@ -537,9 +543,11 @@ static ptr fasl_entry(ptr tc, IFASLCODE situation, unbufFaslFile uf, ptr externa
       }
       switch (kind) {
         case fasl_type_fasl:
+          fprintf(stderr, "fasl_entry: fasl_type_fasl\n");
           faslin(tc, &x, externals, &strbuf, &ffo);
           break;
         case fasl_type_vfasl:
+          fprintf(stderr, "fasl_entry: fasl_type_vfasl\n");
           x = S_vfasl(bv, uf, 0, ffo.size);
           break;
         default:

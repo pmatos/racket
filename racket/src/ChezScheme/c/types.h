@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+#ifndef CHEZ_TYPES_H
+#define CHEZ_TYPES_H
+
+#include "equates.h"
+
 /* C datatypes (mostly defined in equates.h or scheme.h)
  *    ptr: scheme object: (void *) on most platforms
  *   uptr: unsigned integer sizeof(uptr) == sizeof(ptr): typically unsigned long
@@ -553,3 +558,5 @@ typedef struct thread_gc {
    and it would be ok to round up the length to a word size. But
    probably the compiler does a fine job with plain old `mempcy`. */
 #define memcpy_aligned memcpy
+
+#endif // CHEZ_TYPES_H

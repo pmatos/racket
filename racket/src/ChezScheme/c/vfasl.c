@@ -207,6 +207,7 @@ static void sort_offsets(vfoff *p, vfoff len);
 
 ptr S_vfasl(ptr bv, void *stream, iptr offset, iptr input_len)
 {
+  fprintf(stderr, "S_vfasl\n");
   ptr vspaces[vspaces_count];
   uptr vspace_offsets[vspaces_count+1];
 # define VSPACE_LENGTH(s) (vspace_offsets[(s)+1] - vspace_offsets[(s)])

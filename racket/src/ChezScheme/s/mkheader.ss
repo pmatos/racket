@@ -186,7 +186,11 @@
   
         (nl)
         (comment "Warning: Some macros may evaluate arguments more than once.")
-       
+
+        (nl)
+        (pr "#ifndef CHEZ_SCHEME_H\n")
+        (pr "#define CHEZ_SCHEME_H\n")
+        
         (constant-case architecture
           [(pb)
            (nl)
@@ -861,7 +865,11 @@
            (pr "#define LOCKED_INCR(addr, res) (res = ((*(uptr*)addr)-- == 1))~%")
            (pr "#define LOCKED_DECR(addr, res) (res = ((*(uptr*)addr)-- == 1))~%")]
           [else
-            ($oops who "asm locking code is not yet defined for ~s" (constant architecture))]))))
+           ($oops who "asm locking code is not yet defined for ~s" (constant architecture))])
+
+        ;; This should come last
+        (nl)
+        (pr "#endif // CHEZ_SCHEME_H\n"))))
 
   (set! mkequates.h
     (lambda (ofn)
@@ -878,7 +886,13 @@
   
         (nl)
         (comment "Warning: Some macros may evaluate arguments more than once.")
-  
+
+        (nl)
+        (pr "#ifndef CHEZ_EQUATES_H\n")
+        (pr "#define CHEZ_EQUATES_H\n")
+
+        (pr "#include <stdint.h>\n")
+        
         (nl)
         (comment "Integer typedefs")
         (pr "typedef ~a I8;~%" (constant typedef-i8))
@@ -1205,5 +1219,8 @@
         (def "library_cpu_features"
              (libspec-index (lookup-libspec cpu-features)))
 
+        ;; this should come last
+        (nl)
+        (pr "#endif // CHEZ_EQUATES_H\n")
       )))
 )
