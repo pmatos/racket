@@ -1802,7 +1802,8 @@ static uintptr_t equal_hash_key(Scheme_Object *o, uintptr_t k, Hash_Info *hi)
   case scheme_hash_tree_indirection_type:
     {
       Scheme_Hash_Tree *ht = (Scheme_Hash_Tree *)o;
-      Scheme_Object *ik, *iv;
+      Scheme_Object *ik = NULL;
+      Scheme_Object *iv = NULL;
       int i;
       uintptr_t vk;
       intptr_t old_depth;
@@ -2294,7 +2295,8 @@ static uintptr_t equal_hash_key2(Scheme_Object *o, Hash_Info *hi)
   case scheme_eqv_hash_tree_type:
     {
       Scheme_Hash_Tree *ht = (Scheme_Hash_Tree *)o;
-      Scheme_Object *iv, *ik;
+      Scheme_Object *iv = NULL;
+      Scheme_Object *ik = NULL;
       int i;
       uintptr_t k = 0;
       intptr_t old_depth;
@@ -3601,7 +3603,8 @@ int scheme_hash_tree_equal_rec(Scheme_Hash_Tree *t1, Scheme_Object *orig_t1,
                                Scheme_Hash_Tree *t2, Scheme_Object *orig_t2,
                                void *eql)
 {
-  Scheme_Object *k, *v, *v2;
+  Scheme_Object *k, *v2;
+  Scheme_Object *v = NULL;
   int i;
 
   t1 = resolve_placeholder(t1);

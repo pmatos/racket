@@ -4534,6 +4534,7 @@ static Scheme_Object *make_name(const char *pre, const char *tn, int ltn,
 				const char *post1, const char *fn, int lfn,
 				const char *post2, int sym)
 {
+#define MAX_SYM_LEN 256
   int total, lp, lp1, lp2, xltn, xlfn;
   char *name, buffer[256];
 
@@ -4553,7 +4554,7 @@ static Scheme_Object *make_name(const char *pre, const char *tn, int ltn,
   total += xlfn;
   total += (lp2 = strlen(post2));
 
-  if (sym && (total < 256))
+  if (sym && (total < MAX_SYM_LEN))
     name = buffer;
   else
     name = (char *)scheme_malloc_atomic(sizeof(char)*(total + 1));
@@ -4573,10 +4574,13 @@ static Scheme_Object *make_name(const char *pre, const char *tn, int ltn,
 
   name[total] = 0;
 
-  if (sym)
+  /* If above we assigned name to local var buffer, 
+     then this is a symbol that fitted in buffer => intern symbol */
+  if (name == buffer) 
     return scheme_intern_exact_symbol(name, total);
   else
     return (Scheme_Object *)name;
+#undef MAX_SYM_LEN
 }
 
 /*========================================================================*/
